@@ -1,0 +1,33 @@
+name: reference-to-style
+
+on:
+  push:
+    paths: ["skills/design/reference-to-style/**", ".github/workflows/reference-to-style.yml"]
+  pull_request:
+    paths: ["skills/design/reference-to-style/**", ".github/workflows/reference-to-style.yml"]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, python: "3.9" }
+          - { os: ubuntu-latest, python: "3.13" }
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: skills/design/reference-to-style
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: python -m pip install -r requirements.txt
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: python scripts/doctor.py
+      - run: python -m unittest discover -s tests -v

@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drafting sheet board</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans+Condensed:wght@400&amp;display=swap">
+<style>
+/* Board shell: the same on every board. Leave it unchanged.
+   Its colours and fonts come from the --board- tokens at the bottom, so every board takes the look of its style. */
+* { box-sizing: border-box; }
+:root { --board-surface: color-mix(in srgb, var(--board-ink) 4%, var(--board-paper)); }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; scrollbar-color: var(--board-line) var(--board-paper); }
+body { margin: 0; background: var(--board-paper); color: var(--board-ink); font: 16px/1.6 var(--board-font); }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--board-ink); outline-offset: 2px; }
+::selection { background: var(--board-ink); color: var(--board-paper); }
+code { font: 13px/1.4 var(--board-label-font); overflow-wrap: anywhere; }
+
+/* Contents bar */
+.contents { position: sticky; top: 0; z-index: 10; background: var(--board-paper); border-bottom: 1px solid var(--board-line); }
+.contents ol { display: flex; gap: 24px; max-width: 1232px; margin: 0 auto; padding: 12px 16px; overflow-x: auto; list-style: none; font: 14px/1.4 var(--board-label-font); white-space: nowrap; }
+.contents a { text-decoration: none; }
+.contents a:hover { text-decoration: underline; }
+
+/* Page and section heads */
+.page { max-width: 1232px; margin: 0 auto; padding: 64px 16px 96px; }
+.label { margin: 0; font: 14px/1.4 var(--board-label-font); }
+.muted { color: var(--board-muted); }
+.intro h1 { margin: 0 0 24px; font: 400 clamp(48px, 9vw, 88px)/1.05 var(--board-display-font); overflow-wrap: anywhere; text-wrap: balance; }
+.intro p { max-width: 640px; margin: 0; }
+.intro .lead { font-size: 20px; line-height: 1.5; }
+.section { margin-top: 112px; }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; margin-bottom: 32px; padding-bottom: 12px; border-bottom: 1px solid var(--board-ink); }
+.head h2 { margin: 0; font: 400 32px/1.2 var(--board-display-font); }
+.head .ask { margin: 4px 0 0; }
+.sub { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--board-line); }
+.head + .sub { margin-top: 0; }
+.sub h3 { margin: 0; font: 400 18px/1.4 var(--board-font); }
+
+/* 1. References: at most 6 columns, shown whole, click to open full size */
+.refs { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(150px, calc((100% - 80px) / 6)), 1fr)); gap: 24px 16px; align-items: start; }
+.refs figure { margin: 0; min-width: 0; }
+.refs a { position: relative; display: block; aspect-ratio: 3 / 4; background: var(--board-surface); border: 1px solid var(--board-line); }
+.refs a:hover { border-color: var(--board-ink); }
+.refs img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: contain; }
+.refs figcaption { margin-top: 8px; font: 14px/1.4 var(--board-label-font); }
+.refs figcaption span { display: block; color: var(--board-muted); }
+
+/* Styles: colour, type and scale */
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px 16px; }
+.swatches > div { min-width: 0; }
+.swatches i { display: block; height: 96px; margin-bottom: 12px; border: 1px solid var(--board-line); }
+.swatches span { display: block; font: 14px/1.4 var(--board-label-font); overflow-wrap: anywhere; }
+.specimen { display: grid; gap: 40px; }
+.specimen > div { min-width: 0; overflow-wrap: anywhere; }
+.specimen .label { margin-top: 12px; }
+.scale { display: flex; flex-wrap: wrap; gap: 40px 72px; }
+.scale-group > .label { margin-bottom: 16px; color: var(--board-muted); }
+.scale-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 24px; }
+.scale-row > div { display: flex; flex-direction: column; gap: 10px; }
+.space { display: block; width: var(--size); height: var(--size); background: color-mix(in srgb, var(--board-ink) 18%, transparent); }
+.radius { display: block; width: 56px; height: 56px; border: 1.5px solid var(--board-ink); border-radius: var(--size); }
+.stroke { display: block; width: 88px; height: var(--size); margin: calc((56px - var(--size)) / 2) 0; background: var(--board-ink); }
+
+/* 3. Style rules */
+.rules { width: 100%; border-collapse: collapse; }
+.rules th { padding: 0 24px 12px 0; font: 14px/1.4 var(--board-label-font); text-align: left; color: var(--board-muted); }
+.rules td { padding: 16px 24px 16px 0; border-top: 1px solid var(--board-line); vertical-align: top; }
+.rules th:nth-child(1), .rules th:nth-child(2) { width: 25%; }
+
+/* Components: one block per type, its states side by side on the page's own background */
+.component { padding: 24px 0 40px; border-top: 1px solid var(--board-line); }
+.head + .component { padding-top: 0; border-top: 0; }
+.component-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+.component-head h3 { margin: 0; font: 400 22px/1.3 var(--board-display-font); }
+.component-head .label { margin-left: auto; color: var(--board-muted); }
+.states { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 32px 24px; }
+.cell { display: flex; flex-direction: column; min-width: 0; }
+.cell.wide { grid-column: span 2; }
+.cell-stage { display: flex; flex: 1; align-items: center; }
+.cell-stage > * { max-width: 100%; }
+.cell .label { margin-top: 12px; }
+
+/* 5. Small section */
+.stage { padding: 16px; border: 1px solid var(--board-line); }
+
+/* 6. Motion */
+.rows { margin: 0; padding: 0; list-style: none; }
+.rows li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 8px 24px; align-items: center; padding: 24px 0; border-top: 1px solid var(--board-line); }
+.rows li:first-child { padding-top: 0; border-top: 0; }
+
+.end { margin-top: 112px; padding-top: 24px; border-top: 1px solid var(--board-ink); }
+.end h2 { margin: 0; font: 400 32px/1.2 var(--board-display-font); }
+.end p { margin: 8px 0 0; }
+
+@media (max-width: 720px) {
+  .page { padding-top: 48px; }
+  .section, .end { margin-top: 80px; }
+  .refs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rows li { grid-template-columns: minmax(0, 1fr); }
+  .states { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cell.wide { grid-column: 1 / -1; }
+  .rules thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .rules tr { display: block; padding: 16px 0; border-top: 1px solid var(--board-line); }
+  .rules td { display: block; padding: 0 0 8px; border: 0; }
+  .rules td:last-child { padding-bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Style under review: change only this block. Keep tokens first, then the samples' styles.
+   Colours and fonts come only from the --drafting- tokens. Every sample class starts with drafting-. */
+:root {
+  --drafting-colour-paper: #f2ece0;
+  --drafting-colour-grid: #d9d3be;
+  --drafting-colour-ink: #212f48;
+  --drafting-colour-mark: #c64827;
+  --drafting-colour-ink-soft: #4b5566;
+  --drafting-colour-paper-deep: #e6e0cf;
+  --drafting-colour-mark-text: #ac3f22;
+  --drafting-type-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --drafting-type-label: "IBM Plex Mono", ui-monospace, monospace;
+  --drafting-type-body: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+  --drafting-size-display: 37px;
+  --drafting-size-label: 14px;
+  --drafting-size-note: 13px;
+  --drafting-leading-note: 20px;
+  --drafting-space-grid: 24px;
+  --drafting-space-s: 8px;
+  --drafting-space-m: 12px;
+  --drafting-space-l: 48px;
+  --drafting-radius-none: 0;
+  --drafting-line-hair: 1px;
+  --drafting-line-heavy: 2px;
+  --board-paper: var(--drafting-colour-paper);
+  --board-ink: var(--drafting-colour-ink);
+  --board-muted: var(--drafting-colour-ink-soft);
+  --board-line: var(--drafting-colour-grid);
+  --board-font: var(--drafting-type-body);
+  --board-label-font: var(--drafting-type-label);
+  --board-display-font: var(--drafting-type-display);
+}
+.drafting-heading { margin: 0; font: 700 var(--drafting-size-display)/1.1 var(--drafting-type-display); letter-spacing: 0.04em; text-transform: uppercase; color: var(--drafting-colour-ink); }
+.drafting-label { margin: 0; font: 400 var(--drafting-size-label)/1.4 var(--drafting-type-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--drafting-colour-ink); }
+.drafting-label-disabled { color: var(--drafting-colour-ink-soft); }
+.drafting-body { margin: 0; max-width: 34em; font: 400 17px/1.5 var(--drafting-type-body); color: var(--drafting-colour-ink); }
+
+.drafting-button { display: inline-block; padding: var(--drafting-space-s) var(--drafting-space-m); border: var(--drafting-line-hair) solid var(--drafting-colour-mark); border-radius: var(--drafting-radius-none); background: var(--drafting-colour-paper); color: var(--drafting-colour-mark-text); font: 500 13px/1.4 var(--drafting-type-label); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; cursor: pointer; }
+.drafting-button:hover, .drafting-button.is-hover { background: var(--drafting-colour-paper-deep); }
+.drafting-button:focus-visible, .drafting-button.is-focus { outline: var(--drafting-line-heavy) solid var(--drafting-colour-ink); outline-offset: 2px; }
+.drafting-button:active, .drafting-button.is-active { background: var(--drafting-colour-mark); color: var(--drafting-colour-paper); }
+.drafting-button[aria-disabled="true"] { border-style: dashed; border-color: var(--drafting-colour-ink-soft); color: var(--drafting-colour-ink-soft); background: var(--drafting-colour-paper); cursor: not-allowed; }
+
+.drafting-sheet { padding: var(--drafting-space-grid); background-color: var(--drafting-colour-paper);
+  background-image: linear-gradient(var(--drafting-colour-grid) var(--drafting-line-hair), transparent var(--drafting-line-hair)),
+    linear-gradient(90deg, var(--drafting-colour-grid) var(--drafting-line-hair), transparent var(--drafting-line-hair));
+  background-size: var(--drafting-space-grid) var(--drafting-space-grid); }
+
+.drafting-figure { display: block; color: var(--drafting-colour-ink); }
+.drafting-figure .drafting-heavy { stroke: currentColor; stroke-width: var(--drafting-line-heavy); fill: none; vector-effect: non-scaling-stroke; }
+.drafting-figure .drafting-hair { stroke: currentColor; stroke-width: var(--drafting-line-hair); fill: none; vector-effect: non-scaling-stroke; }
+.drafting-figure * { vector-effect: non-scaling-stroke; }
+.drafting-dimension { display: block; color: var(--drafting-colour-mark); }
+.drafting-dimension line { stroke: currentColor; stroke-width: var(--drafting-line-hair); }
+.drafting-dimension text { fill: currentColor; stroke: none; font: 400 var(--drafting-size-note) var(--drafting-type-label); }
+
+.drafting-notes { width: 320px; margin: 0; padding: var(--drafting-space-s); list-style: none; font: 400 var(--drafting-size-note)/var(--drafting-leading-note) var(--drafting-type-label); text-transform: uppercase; color: var(--drafting-colour-ink); }
+.drafting-notes li + li { margin-top: var(--drafting-space-m); }
+
+.drafting-spec { width: 360px; margin: 0; border-collapse: collapse; font: 400 var(--drafting-size-note)/14px var(--drafting-type-label); text-transform: uppercase; color: var(--drafting-colour-ink); }
+.drafting-spec td { padding: var(--drafting-space-s) var(--drafting-space-m); border-top: var(--drafting-line-hair) solid var(--drafting-colour-ink); }
+.drafting-spec tr:first-child td { border-top: 0; }
+.drafting-spec td:first-child { border-left: var(--drafting-line-hair) solid var(--drafting-colour-ink); }
+.drafting-spec td:last-child { text-align: right; }
+.drafting-spec tr:hover td, .drafting-spec tr.is-hover td { background: var(--drafting-colour-paper-deep); }
+
+.drafting-rig { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--drafting-space-grid) var(--drafting-space-l); align-items: start; }
+.drafting-rig-text { display: grid; gap: var(--drafting-space-grid); justify-items: start; }
+.drafting-rig-figure { display: grid; gap: var(--drafting-space-grid); justify-items: start; }
+.drafting-rig .drafting-spec { width: 100%; max-width: 360px; }
+@media (max-width: 720px) { .drafting-rig { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<nav class="contents" aria-label="Board sections">
+  <ol>
+    <li><a href="#references">1 References</a></li>
+    <li><a href="#styles">2 Styles</a></li>
+    <li><a href="#components">3 Components</a></li>
+    <li><a href="#small-section">4 Small section</a></li>
+    <li><a href="#motion">5 Motion</a></li>
+    <li><a href="#style-rules">6 Style rules</a></li>
+  </ol>
+</nav>
+<main class="page">
+  <header class="intro">
+    <h1>Drafting sheet</h1>
+    <p class="lead">An engineering drawing's paper, ink and red revision marks, carried over to a site about a growing wheel.</p>
+  </header>
+
+  <section class="section" id="references">
+    <div class="head">
+      <div><h2>1. References</h2><p class="ask">Do these show what you liked?</p></div>
+      <span class="label muted">1 drawing sheet · demo reference · Select it to open it full size</span>
+    </div>
+    <div class="refs">
+      <figure>
+        <a href="references/drawing-sheet.jpg"><img src="references/drawing-sheet.jpg" alt="Engineering drawing sheet: side elevation of a drive wheel on gridded cream paper"></a>
+        <figcaption>Drawing sheet, side elevation<span>Paper, grid, navy ink, red revision marks, ruled title block</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="styles">
+    <div class="head">
+      <div><h2>2. Styles</h2><p class="ask">Do the colours, type and scale feel right?</p></div>
+      <span class="label muted">7 colours · 3 typefaces · 4 sizes</span>
+    </div>
+
+    <div class="sub"><h3>Colour</h3></div>
+    <div class="swatches">
+      <div><i style="background: var(--drafting-colour-paper)"></i><span>Paper · #f2ece0</span><span class="muted">Page and components</span></div>
+      <div><i style="background: var(--drafting-colour-grid)"></i><span>Grid · #d9d3be</span><span class="muted">Grid and table rules</span></div>
+      <div><i style="background: var(--drafting-colour-ink)"></i><span>Ink · #212f48</span><span class="muted">All text and linework</span></div>
+      <div><i style="background: var(--drafting-colour-mark)"></i><span>Mark · #c64827</span><span class="muted">Actions, dimensions</span></div>
+      <div><i style="background: var(--drafting-colour-ink-soft)"></i><span>Ink soft · #4b5566</span><span class="muted">Secondary text</span></div>
+      <div><i style="background: var(--drafting-colour-mark-text)"></i><span>Mark text · #ac3f22</span><span class="muted">Text in the mark colour</span></div>
+      <div><i style="background: var(--drafting-colour-paper-deep)"></i><span>Paper deep · #e6e0cf</span><span class="muted">Hover and pressed</span></div>
+    </div>
+
+    <div class="sub"><h3>Type</h3></div>
+    <div class="specimen">
+      <div><div style="font: 700 var(--drafting-size-display)/1.1 var(--drafting-type-display); letter-spacing: 0.04em; text-transform: uppercase">Growing wheel · the rig</div><p class="label muted">Title · Barlow Condensed 700 · 37px</p></div>
+      <div><div style="font: 400 17px/1.5 var(--drafting-type-body)">Seven bays turn slowly past the light, so every tray gets the same day.</div><p class="label muted">Body · IBM Plex Sans Condensed · 17px</p></div>
+      <div><div style="font: 400 var(--drafting-size-label)/1.4 var(--drafting-type-label); letter-spacing: 0.12em; text-transform: uppercase">Bay 3 of 7 · Lettuce · day 21</div><p class="label muted">Label · IBM Plex Mono · 14px</p></div>
+      <div><div style="font: 400 var(--drafting-size-note)/var(--drafting-leading-note) var(--drafting-type-label); text-transform: uppercase">1. Wheel turns once every 40 minutes.</div><p class="label muted">Note · IBM Plex Mono · 13px/20px</p></div>
+    </div>
+
+    <div class="sub"><h3>Scale</h3></div>
+    <div class="scale">
+      <div class="scale-group">
+        <p class="label">Spacing</p>
+        <div class="scale-row">
+          <div><i class="space" style="--size: var(--drafting-space-s)"></i><span class="label">S · 8px</span></div>
+          <div><i class="space" style="--size: var(--drafting-space-m)"></i><span class="label">M · 12px</span></div>
+          <div><i class="space" style="--size: var(--drafting-space-grid)"></i><span class="label">Grid · 24px</span></div>
+          <div><i class="space" style="--size: var(--drafting-space-l)"></i><span class="label">L · 48px</span></div>
+        </div>
+      </div>
+      <div class="scale-group">
+        <p class="label">Radius</p>
+        <div class="scale-row">
+          <div><i class="radius" style="--size: var(--drafting-radius-none)"></i><span class="label">None · 0</span></div>
+        </div>
+      </div>
+      <div class="scale-group">
+        <p class="label">Border</p>
+        <div class="scale-row">
+          <div><i class="stroke" style="--size: var(--drafting-line-hair)"></i><span class="label">Hair · 1px</span></div>
+          <div><i class="stroke" style="--size: var(--drafting-line-heavy)"></i><span class="label">Heavy · 2px</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="components">
+    <div class="head">
+      <div><h2>3. Components</h2><p class="ask">Does each part look right in every state?</p></div>
+      <span class="label muted">8 types · Hover, focus and active are held in place</span>
+    </div>
+    <div class="component">
+      <div class="component-head"><h3>Heading</h3><span class="label">1 state</span></div>
+      <div class="states"><div class="cell wide"><div class="cell-stage"><p class="drafting-heading">Seven bays, one light</p></div><p class="label">Default</p></div></div>
+    </div>
+    <div class="component">
+      <div class="component-head"><h3>Label</h3><span class="label">2 states</span></div>
+      <div class="states">
+        <div class="cell"><div class="cell-stage"><p class="drafting-label">Bay 3 · Lettuce</p></div><p class="label">Default</p></div>
+        <div class="cell"><div class="cell-stage"><p class="drafting-label drafting-label-disabled">Bay 7 · Empty</p></div><p class="label">Disabled</p></div>
+      </div>
+    </div>
+    <div class="component">
+      <div class="component-head"><h3>Button</h3><span class="label">5 states</span></div>
+      <div class="states">
+        <div class="cell"><div class="cell-stage"><a class="drafting-button" href="#small-section">Book a visit</a></div><p class="label">Default</p></div>
+        <div class="cell"><div class="cell-stage"><a class="drafting-button is-hover" href="#small-section">Book a visit</a></div><p class="label">Hover</p></div>
+        <div class="cell"><div class="cell-stage"><a class="drafting-button is-focus" href="#small-section">Book a visit</a></div><p class="label">Focus</p></div>
+        <div class="cell"><div class="cell-stage"><a class="drafting-button is-active" href="#small-section">Book a visit</a></div><p class="label">Active</p></div>
+        <div class="cell"><div class="cell-stage"><a class="drafting-button" aria-disabled="true">Fully booked</a></div><p class="label">Disabled</p></div>
+      </div>
+    </div>
+    <div class="component">
+      <div class="component-head"><h3>Sheet</h3><span class="label">1 state</span></div>
+      <div class="states"><div class="cell wide"><div class="cell-stage"><div class="drafting-sheet" style="width: 100%; height: 144px" data-crop="paper" data-check="colour rules"></div></div><p class="label">Default · 24px grid</p></div></div>
+    </div>
+    <div class="component">
+      <div class="component-head"><h3>Figure and dimension</h3><span class="label">1 state</span></div>
+      <div class="states"><div class="cell wide"><div class="cell-stage"><div>
+        <svg class="drafting-figure" width="160" height="160" viewBox="0 0 120 120" role="img" aria-label="Growing wheel figure">
+          <circle class="drafting-heavy" cx="60" cy="60" r="52"/><circle class="drafting-hair" cx="60" cy="60" r="38"/><circle class="drafting-heavy" cx="60" cy="60" r="7"/>
+          <g class="drafting-hair"><rect x="54" y="10" width="12" height="16"/><rect x="54" y="94" width="12" height="16"/><rect x="10" y="54" width="16" height="12"/><rect x="94" y="54" width="16" height="12"/></g>
+        </svg>
+        <svg class="drafting-dimension" width="160" height="34" viewBox="0 0 160 34" role="img" aria-label="5.5 metres"><line x1="1" y1="26" x2="159" y2="26"/><line x1="1" y1="16" x2="1" y2="34"/><line x1="159" y1="16" x2="159" y2="34"/><text x="80" y="20" text-anchor="middle">Ø 5.5 M</text></svg>
+      </div></div><p class="label">Default · value always in mark colour</p></div></div>
+    </div>
+    <div class="component">
+      <div class="component-head"><h3>Note list</h3><span class="label">1 state</span></div>
+      <div class="states"><div class="cell wide"><div class="cell-stage"><ol class="drafting-notes"><li>1. Wheel turns once every 40 minutes.</li><li>2. Harvest at the top of the turn.</li></ol></div><p class="label">Default</p></div></div>
+    </div>
+    <div class="component">
+      <div class="component-head"><h3>Spec table</h3><span class="label">2 states</span></div>
+      <div class="states">
+        <div class="cell wide"><div class="cell-stage"><table class="drafting-spec"><tr><td>Diameter</td><td>5.5 m</td></tr><tr><td>Bays</td><td>7</td></tr></table></div><p class="label">Default</p></div>
+        <div class="cell wide"><div class="cell-stage"><table class="drafting-spec"><tr><td>Diameter</td><td>5.5 m</td></tr><tr class="is-hover"><td>Bays</td><td>7</td></tr></table></div><p class="label">Row hover</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="small-section">
+    <div class="head">
+      <div><h2>4. Small section</h2><p class="ask">Do the parts work together?</p></div>
+      <span class="label muted">The rig · demo page, below the hero</span>
+    </div>
+    <div class="stage drafting-sheet">
+      <div class="drafting-rig">
+        <div class="drafting-rig-text">
+          <p class="drafting-label" data-crop="label" data-check="colour type">Section 2 · The rig</p>
+          <h3 class="drafting-heading" data-crop="heading" data-check="colour type contrast">Seven bays · one light</h3>
+          <p class="drafting-body">The wheel carries its trays in a slow circle, so every lettuce gets the same light and the same water, and the whole farm fits in one room.</p>
+          <ol class="drafting-notes" data-crop="notes" data-check="colour gap">
+            <li>1. Wheel turns once every 40 minutes.</li>
+            <li>2. Eight trays per bay, each lit from the hub by a 600 W LED bar.</li>
+            <li>3. Water is fed at the lowest tray and drained at the next one up.</li>
+          </ol>
+          <div style="justify-self: stretch" data-crop="stamp" data-check="colour stroke contrast" data-accept="colour #b34d34: text set in mark text (#ac3f22) for 4.5:1; the border keeps the measured mark"><a class="drafting-button" href="#small-section">Book a visit</a></div>
+        </div>
+        <div class="drafting-rig-figure">
+          <svg class="drafting-figure" width="240" height="240" viewBox="0 0 120 120" role="img" aria-label="Growing wheel: eight trays around the hub" data-crop="linework" data-check="colour stroke">
+            <circle class="drafting-heavy" cx="60" cy="60" r="52"/><circle class="drafting-hair" cx="60" cy="60" r="38"/><circle class="drafting-heavy" cx="60" cy="60" r="7"/>
+            <g class="drafting-hair"><rect x="54" y="10" width="12" height="16"/><rect x="54" y="94" width="12" height="16"/><rect x="10" y="54" width="16" height="12"/><rect x="94" y="54" width="16" height="12"/><rect x="19" y="19" width="14" height="14" transform="rotate(45 26 26)"/><rect x="87" y="87" width="14" height="14" transform="rotate(45 94 94)"/><rect x="87" y="19" width="14" height="14" transform="rotate(45 94 26)"/><rect x="19" y="87" width="14" height="14" transform="rotate(45 26 94)"/></g>
+          </svg>
+          <svg class="drafting-dimension" width="240" height="34" viewBox="0 0 240 34" role="img" aria-label="Wheel diameter 5.5 metres" data-crop="dimension" data-check="colour stroke"><line x1="1" y1="26" x2="239" y2="26"/><line x1="1" y1="16" x2="1" y2="34"/><line x1="239" y1="16" x2="239" y2="34"/><text x="120" y="20" text-anchor="middle">Ø 5.5 M</text></svg>
+          <table class="drafting-spec" data-crop="title-block" data-check="colour stroke rules"><tr><td>Diameter</td><td>5.5 m</td></tr><tr><td>Trays</td><td>8 per bay</td></tr><tr><td>Bays</td><td>7</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="motion">
+    <div class="head">
+      <div><h2>5. Motion</h2><p class="ask">Does the movement suit the style?</p></div>
+      <span class="label muted">0 behaviours</span>
+    </div>
+    <ul class="rows">
+      <li><span>None</span><span class="muted">The reference is a still drawing, so states change instantly, like a pen stroke</span></li>
+    </ul>
+  </section>
+
+  <section class="section" id="style-rules">
+    <div class="head">
+      <div><h2>6. Style rules</h2><p class="ask">Does each rule fit the subject?</p></div>
+      <span class="label muted">5 rules</span>
+    </div>
+    <table class="rules">
+      <thead><tr><th scope="col">From the references</th><th scope="col">From the subject</th><th scope="col">Rule</th></tr></thead>
+      <tbody>
+        <tr><td>Red-orange only for revisions and dimensions</td><td class="muted">Rig dimensions from the engineering drawings</td><td>Red-orange marks only measured values and actions; everything else is navy</td></tr>
+        <tr><td>Dimension lines with end ticks</td><td class="muted">The 5.5 m wheel diameter</td><td>Figures carry their real measurement as a red dimension line under them</td></tr>
+        <tr><td>Hairline-ruled title block rows</td><td class="muted">The rig's specification</td><td>Specs read as ruled rows: label left in mono, value right</td></tr>
+        <tr><td>Numbered general notes</td><td class="muted">Growing conditions per bay</td><td>Facts about the rig are numbered notes, not bullet points</td></tr>
+        <tr><td>24px square grid</td><td class="muted">The drawing scale</td><td>Layout snaps to the 24px grid; the grid shows only on the sheet surface</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="end">
+    <h2>Anything to change?</h2>
+    <p>Answer in your Claude session: say what to change, or leave it as it is.</p>
+  </footer>
+</main>
+</body>
+</html>

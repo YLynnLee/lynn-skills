@@ -1,0 +1,433 @@
+{
+ "crops": {
+  "heading": {
+   "size": [
+    715.0,
+    50.0
+   ],
+   "palette": [
+    {
+     "hex": "#f2ece0",
+     "share": 0.7688,
+     "role": "background",
+     "confidence": "high"
+    },
+    {
+     "hex": "#212f48",
+     "share": 0.2181,
+     "role": "ink",
+     "confidence": "high"
+    },
+    {
+     "hex": "#303b4f",
+     "share": 0.0132,
+     "role": "ink",
+     "confidence": "high"
+    }
+   ],
+   "stroke": 5.0,
+   "ink_box": [
+    13.0,
+    12.5,
+    702.0,
+    26.0
+   ],
+   "row_gaps": [],
+   "rules": [],
+   "contrast": 11.41,
+   "source": "references/drawing-sheet.jpg",
+   "region": [
+    120,
+    110,
+    1430,
+    100
+   ],
+   "file": "references/crops/heading.png",
+   "scale": 2.0,
+   "exact": false,
+   "jpeg_quality": 88
+  },
+  "label": {
+   "size": [
+    260.0,
+    22.0
+   ],
+   "palette": [
+    {
+     "hex": "#f2ece0",
+     "share": 0.8437,
+     "role": "background",
+     "confidence": "high"
+    },
+    {
+     "hex": "#282c37",
+     "share": 0.1004,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#262f3f"
+    },
+    {
+     "hex": "#d7d1c3",
+     "share": 0.0559,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#dad4c4"
+    }
+   ],
+   "stroke": 1.5,
+   "ink_box": [
+    10.5,
+    5.0,
+    232.0,
+    10.5
+   ],
+   "row_gaps": [],
+   "rules": [
+    {
+     "hex": "#d7d1c3",
+     "rows": null,
+     "cols": 24.0
+    }
+   ],
+   "contrast": 11.86,
+   "source": "references/drawing-sheet.jpg",
+   "region": [
+    120,
+    208,
+    520,
+    44
+   ],
+   "file": "references/crops/label.png",
+   "scale": 2.0,
+   "exact": false,
+   "jpeg_quality": 88
+  },
+  "stamp": {
+   "size": [
+    135.0,
+    40.0
+   ],
+   "palette": [
+    {
+     "hex": "#f2ece0",
+     "share": 0.8434,
+     "role": "background",
+     "confidence": "high"
+    },
+    {
+     "hex": "#b34d34",
+     "share": 0.1116,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#c64827"
+    },
+    {
+     "hex": "#d7d1c3",
+     "share": 0.0449,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#d9d3c3"
+    }
+   ],
+   "stroke": 1.0,
+   "ink_box": [
+    0.0,
+    5.5,
+    129.5,
+    29.0
+   ],
+   "row_gaps": [],
+   "rules": [
+    {
+     "hex": "#b34d34",
+     "rows": 27.0,
+     "cols": null
+    },
+    {
+     "hex": "#d7d1c3",
+     "rows": null,
+     "cols": 24.0
+    }
+   ],
+   "contrast": 4.43,
+   "source": "references/drawing-sheet.jpg",
+   "region": [
+    1570,
+    144,
+    270,
+    80
+   ],
+   "file": "references/crops/stamp.png",
+   "scale": 2.0,
+   "exact": false,
+   "jpeg_quality": 88
+  },
+  "paper": {
+   "size": [
+    170.0,
+    80.0
+   ],
+   "palette": [
+    {
+     "hex": "#f2ece0",
+     "share": 0.9504,
+     "role": "background",
+     "confidence": "high"
+    },
+    {
+     "hex": "#d6d0c0",
+     "share": 0.0496,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#d9d3be"
+    }
+   ],
+   "stroke": 1.0,
+   "ink_box": [
+    0.0,
+    0.0,
+    170.0,
+    80.0
+   ],
+   "row_gaps": [],
+   "rules": [
+    {
+     "hex": "#d6d0c0",
+     "rows": 24.0,
+     "cols": 24.0
+    }
+   ],
+   "contrast": 1.31,
+   "source": "references/drawing-sheet.jpg",
+   "region": [
+    860,
+    280,
+    340,
+    160
+   ],
+   "file": "references/crops/paper.png",
+   "scale": 2.0,
+   "exact": false,
+   "jpeg_quality": 88
+  },
+  "linework": {
+   "size": [
+    120.0,
+    120.0
+   ],
+   "palette": [
+    {
+     "hex": "#f2ece0",
+     "share": 0.8586,
+     "role": "background",
+     "confidence": "high"
+    },
+    {
+     "hex": "#252e3b",
+     "share": 0.0767,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#213144"
+    },
+    {
+     "hex": "#d7d1c3",
+     "share": 0.0647,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#dad4c4"
+    }
+   ],
+   "stroke": 1.5,
+   "ink_box": [
+    0.0,
+    0.0,
+    120.0,
+    120.0
+   ],
+   "row_gaps": [],
+   "rules": [
+    {
+     "hex": "#d7d1c3",
+     "rows": 24.0,
+     "cols": 24.0
+    }
+   ],
+   "contrast": 11.65,
+   "source": "references/drawing-sheet.jpg",
+   "region": [
+    620,
+    760,
+    240,
+    240
+   ],
+   "file": "references/crops/linework.png",
+   "scale": 2.0,
+   "exact": false,
+   "jpeg_quality": 88
+  },
+  "dimension": {
+   "size": [
+    440.0,
+    35.0
+   ],
+   "palette": [
+    {
+     "hex": "#f2ece0",
+     "share": 0.9106,
+     "role": "background",
+     "confidence": "high"
+    },
+    {
+     "hex": "#d7d1c3",
+     "share": 0.0505,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#d9d3c3"
+    },
+    {
+     "hex": "#9e513e",
+     "share": 0.0389,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#b04c38"
+    }
+   ],
+   "stroke": 1.0,
+   "ink_box": [
+    9.0,
+    4.0,
+    421.5,
+    28.0
+   ],
+   "row_gaps": [
+    2.5
+   ],
+   "rules": [
+    {
+     "hex": "#d7d1c3",
+     "rows": 24.0,
+     "cols": 24.0
+    }
+   ],
+   "contrast": 4.82,
+   "source": "references/drawing-sheet.jpg",
+   "region": [
+    300,
+    1320,
+    880,
+    70
+   ],
+   "file": "references/crops/dimension.png",
+   "scale": 2.0,
+   "exact": false,
+   "jpeg_quality": 88
+  },
+  "notes": {
+   "size": [
+    335.0,
+    130.0
+   ],
+   "palette": [
+    {
+     "hex": "#f2ece0",
+     "share": 0.9216,
+     "role": "background",
+     "confidence": "high"
+    },
+    {
+     "hex": "#252936",
+     "share": 0.0784,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#242c3d"
+    }
+   ],
+   "stroke": 1.5,
+   "ink_box": [
+    7.5,
+    7.0,
+    309.5,
+    113.5
+   ],
+   "row_gaps": [
+    22.0,
+    9.5,
+    22.0,
+    9.0
+   ],
+   "rules": [],
+   "contrast": 12.32,
+   "source": "references/drawing-sheet.jpg",
+   "region": [
+    1670,
+    340,
+    670,
+    260
+   ],
+   "file": "references/crops/notes.png",
+   "scale": 2.0,
+   "exact": false,
+   "jpeg_quality": 88
+  },
+  "title-block": {
+   "size": [
+    360.0,
+    65.0
+   ],
+   "palette": [
+    {
+     "hex": "#f2ece0",
+     "share": 0.8459,
+     "role": "background",
+     "confidence": "high"
+    },
+    {
+     "hex": "#25313f",
+     "share": 0.0824,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#213448"
+    },
+    {
+     "hex": "#d7d1c3",
+     "share": 0.0717,
+     "role": "ink",
+     "confidence": "medium",
+     "likely": "#d9d3c3"
+    }
+   ],
+   "stroke": 1.0,
+   "ink_box": [
+    5.0,
+    2.0,
+    355.0,
+    63.0
+   ],
+   "row_gaps": [],
+   "rules": [
+    {
+     "hex": "#25313f",
+     "rows": 31.0,
+     "cols": null
+    },
+    {
+     "hex": "#d7d1c3",
+     "rows": 24.0,
+     "cols": 24.0
+    }
+   ],
+   "contrast": 11.23,
+   "source": "references/drawing-sheet.jpg",
+   "region": [
+    1680,
+    1280,
+    720,
+    130
+   ],
+   "file": "references/crops/title-block.png",
+   "scale": 2.0,
+   "exact": false,
+   "jpeg_quality": 88
+  }
+ }
+}

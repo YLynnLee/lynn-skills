@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{Style name}} board</title>
+<link rel="stylesheet" href="{{Google Fonts URL for the style's fonts}}">
+<style>
+/* Board shell: the same on every board. Leave it unchanged.
+   Its colours and fonts come from the --board- tokens at the bottom, so every board takes the look of its style. */
+* { box-sizing: border-box; }
+:root { --board-surface: color-mix(in srgb, var(--board-ink) 4%, var(--board-paper)); }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; scrollbar-color: var(--board-line) var(--board-paper); }
+body { margin: 0; background: var(--board-paper); color: var(--board-ink); font: 16px/1.6 var(--board-font); }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--board-ink); outline-offset: 2px; }
+::selection { background: var(--board-ink); color: var(--board-paper); }
+code { font: 13px/1.4 var(--board-label-font); overflow-wrap: anywhere; }
+
+/* Contents bar */
+.contents { position: sticky; top: 0; z-index: 10; background: var(--board-paper); border-bottom: 1px solid var(--board-line); }
+.contents ol { display: flex; gap: 24px; max-width: 1232px; margin: 0 auto; padding: 12px 16px; overflow-x: auto; list-style: none; font: 14px/1.4 var(--board-label-font); white-space: nowrap; }
+.contents a { text-decoration: none; }
+.contents a:hover { text-decoration: underline; }
+
+/* Page and section heads */
+.page { max-width: 1232px; margin: 0 auto; padding: 64px 16px 96px; }
+.label { margin: 0; font: 14px/1.4 var(--board-label-font); }
+.muted { color: var(--board-muted); }
+.intro h1 { margin: 0 0 24px; font: 400 clamp(48px, 9vw, 88px)/1.05 var(--board-display-font); overflow-wrap: anywhere; text-wrap: balance; }
+.intro p { max-width: 640px; margin: 0; }
+.intro .lead { font-size: 20px; line-height: 1.5; }
+.section { margin-top: 112px; }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; margin-bottom: 32px; padding-bottom: 12px; border-bottom: 1px solid var(--board-ink); }
+.head h2 { margin: 0; font: 400 32px/1.2 var(--board-display-font); }
+.head .ask { margin: 4px 0 0; }
+.sub { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--board-line); }
+.head + .sub { margin-top: 0; }
+.sub h3 { margin: 0; font: 400 18px/1.4 var(--board-font); }
+
+/* 1. References: at most 6 columns, shown whole, click to open full size */
+.refs { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(150px, calc((100% - 80px) / 6)), 1fr)); gap: 24px 16px; align-items: start; }
+.refs figure { margin: 0; min-width: 0; }
+.refs a { position: relative; display: block; aspect-ratio: 3 / 4; background: var(--board-surface); border: 1px solid var(--board-line); }
+.refs a:hover { border-color: var(--board-ink); }
+.refs img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: contain; }
+.refs figcaption { margin-top: 8px; font: 14px/1.4 var(--board-label-font); }
+.refs figcaption span { display: block; color: var(--board-muted); }
+
+/* Styles: colour, type and scale */
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px 16px; }
+.swatches > div { min-width: 0; }
+.swatches i { display: block; height: 96px; margin-bottom: 12px; border: 1px solid var(--board-line); }
+.swatches span { display: block; font: 14px/1.4 var(--board-label-font); overflow-wrap: anywhere; }
+.specimen { display: grid; gap: 40px; }
+.specimen > div { min-width: 0; overflow-wrap: anywhere; }
+.specimen .label { margin-top: 12px; }
+.scale { display: flex; flex-wrap: wrap; gap: 40px 72px; }
+.scale-group > .label { margin-bottom: 16px; color: var(--board-muted); }
+.scale-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 24px; }
+.scale-row > div { display: flex; flex-direction: column; gap: 10px; }
+.space { display: block; width: var(--size); height: var(--size); background: color-mix(in srgb, var(--board-ink) 18%, transparent); }
+.radius { display: block; width: 56px; height: 56px; border: 1.5px solid var(--board-ink); border-radius: var(--size); }
+.stroke { display: block; width: 88px; height: var(--size); margin: calc((56px - var(--size)) / 2) 0; background: var(--board-ink); }
+
+/* 3. Style rules */
+.rules { width: 100%; border-collapse: collapse; }
+.rules th { padding: 0 24px 12px 0; font: 14px/1.4 var(--board-label-font); text-align: left; color: var(--board-muted); }
+.rules td { padding: 16px 24px 16px 0; border-top: 1px solid var(--board-line); vertical-align: top; }
+.rules th:nth-child(1), .rules th:nth-child(2) { width: 25%; }
+
+/* Components: one block per type, its states side by side on the page's own background */
+.component { padding: 24px 0 40px; border-top: 1px solid var(--board-line); }
+.head + .component { padding-top: 0; border-top: 0; }
+.component-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+.component-head h3 { margin: 0; font: 400 22px/1.3 var(--board-display-font); }
+.component-head .label { margin-left: auto; color: var(--board-muted); }
+.states { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 32px 24px; }
+.cell { display: flex; flex-direction: column; min-width: 0; }
+.cell.wide { grid-column: span 2; }
+.cell-stage { display: flex; flex: 1; align-items: center; }
+.cell-stage > * { max-width: 100%; }
+.cell .label { margin-top: 12px; }
+
+/* 5. Small section */
+.stage { padding: 16px; border: 1px solid var(--board-line); }
+
+/* 6. Motion */
+.rows { margin: 0; padding: 0; list-style: none; }
+.rows li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 8px 24px; align-items: center; padding: 24px 0; border-top: 1px solid var(--board-line); }
+.rows li:first-child { padding-top: 0; border-top: 0; }
+
+.end { margin-top: 112px; padding-top: 24px; border-top: 1px solid var(--board-ink); }
+.end h2 { margin: 0; font: 400 32px/1.2 var(--board-display-font); }
+.end p { margin: 8px 0 0; }
+
+@media (max-width: 720px) {
+  .page { padding-top: 48px; }
+  .section, .end { margin-top: 80px; }
+  .refs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rows li { grid-template-columns: minmax(0, 1fr); }
+  .states { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cell.wide { grid-column: 1 / -1; }
+  .rules thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .rules tr { display: block; padding: 16px 0; border-top: 1px solid var(--board-line); }
+  .rules td { display: block; padding: 0 0 8px; border: 0; }
+  .rules td:last-child { padding-bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Style under review: change only this block. Keep tokens first, then the samples' styles.
+   Colours and fonts come only from the --{{slug}}- tokens. Every sample class starts with {{slug}}-. */
+:root {
+  --{{slug}}-colour-{{role}}: {{value}};
+  --board-paper: var(--{{slug}}-colour-{{page background}});
+  --board-ink: var(--{{slug}}-colour-{{main text}});
+  --board-muted: var(--{{slug}}-colour-{{secondary text}});
+  --board-line: var(--{{slug}}-colour-{{hairline}});
+  --board-font: {{body font stack}};
+  --board-label-font: {{label font stack}};
+  --board-display-font: {{heading font stack}};
+}
+</style>
+</head>
+<body>
+<nav class="contents" aria-label="Board sections">
+  <ol>
+    <li><a href="#references">1 References</a></li>
+    <li><a href="#styles">2 Styles</a></li>
+    <li><a href="#components">3 Components</a></li>
+    <li><a href="#small-section">4 Small section</a></li>
+    <li><a href="#motion">5 Motion</a></li>
+    <li><a href="#style-rules">6 Style rules</a></li>
+  </ol>
+</nav>
+<main class="page">
+  <header class="intro">
+    <h1>{{Style name}}</h1>
+    <p class="lead">{{One sentence that sums up the style}}</p>
+  </header>
+
+  <section class="section" id="references">
+    <div class="head">
+      <div><h2>1. References</h2><p class="ask">Do these show what you liked?</p></div>
+      <span class="label muted">{{Count and source}} · Select one to open it full size</span>
+    </div>
+    <div class="refs">
+      <!-- One figure per reference, up to six per row. Images are shown whole, never cropped. -->
+      <figure>
+        <a href="references/{{file.png}}"><img src="references/{{file.png}}" alt="{{Reference}}"></a>
+        <figcaption>{{Reference}}<span>{{What this reference contributes}}</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="styles">
+    <div class="head">
+      <div><h2>2. Styles</h2><p class="ask">Do the colours, type and scale feel right?</p></div>
+      <span class="label muted">{{Count}} colours · {{Count}} typefaces · {{Count}} sizes</span>
+    </div>
+
+    <div class="sub"><h3>Colour</h3></div>
+    <div class="swatches">
+      <!-- One swatch per colour token in the guide's Tokens section: a short role name and its value, then its use in a few words -->
+      <div><i style="background: var(--{{slug}}-colour-{{role}})"></i><span>{{Role}} · {{value}}</span><span class="muted">{{Use}}</span></div>
+    </div>
+
+    <div class="sub"><h3>Type</h3></div>
+    <div class="specimen">
+      <!-- One block per type role, largest first, set in its type token with real copy, as it would read on a page.
+           Under each: the role and font only, no token names. -->
+      <div><div style="font: {{weight}} {{size}}/{{line height}} var(--{{slug}}-type-{{role}})">{{Real copy}}</div><p class="label muted">{{Role}} · {{Font}}</p></div>
+    </div>
+
+    <div class="sub"><h3>Scale</h3></div>
+    <div class="scale">
+      <!-- One shape per spacing, radius and line token, smallest first, labelled with a short size name and its value.
+           Set --size on each shape from its token. Leave out a group the style has no tokens for. -->
+      <div class="scale-group">
+        <p class="label">Spacing</p>
+        <div class="scale-row">
+          <div><i class="space" style="--size: var(--{{slug}}-space-{{size}})"></i><span class="label">{{Size}} · {{value}}</span></div>
+        </div>
+      </div>
+      <div class="scale-group">
+        <p class="label">Radius</p>
+        <div class="scale-row">
+          <div><i class="radius" style="--size: var(--{{slug}}-radius-{{size}})"></i><span class="label">{{Size}} · {{value}}</span></div>
+        </div>
+      </div>
+      <div class="scale-group">
+        <p class="label">Border</p>
+        <div class="scale-row">
+          <div><i class="stroke" style="--size: var(--{{slug}}-line-{{weight}})"></i><span class="label">{{Weight}} · {{value}}</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="components">
+    <div class="head">
+      <div><h2>3. Components</h2><p class="ask">Does each part look right in every state?</p></div>
+      <span class="label muted">{{Count}} types · Hover, focus and active are held in place</span>
+    </div>
+    <!-- One block per component type, in the guide's Components order, built from its Components table.
+         States: one cell per variant or state. Add "wide" to a cell whose sample needs two columns.
+         Samples sit on the page background. If one belongs on another background, such as a dark band or a photo,
+         set that background on its sample from a --{{slug}}- token, never on the cell.
+         Sample classes start with {{slug}}-, such as {{slug}}-button. Hold a state in place by writing its rule twice,
+         as :hover and .is-hover (also .is-focus, .is-active), and putting the class on that cell's sample. -->
+    <div class="component">
+      <div class="component-head"><h3>{{Component type}}</h3><span class="label">{{Count}} states</span></div>
+      <div class="states">
+        <div class="cell"><div class="cell-stage">{{Sample}}</div><p class="label">{{State}}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="small-section">
+    <div class="head">
+      <div><h2>4. Small section</h2><p class="ask">Do the parts work together?</p></div>
+      <span class="label muted">{{Name and location}}</span>
+    </div>
+    <!-- Verification hook, invisible on the page: put data-crop="<crop name>" on the element built from each
+         measured crop, here or on a sample above, and data-check to pick its checks (colour stroke type gap rules contrast).
+         verify.py measures each one against its crop. Choose the element that sits on the same kind of background as its crop. -->
+    <div class="stage">
+      {{Very small real section}}
+    </div>
+  </section>
+
+  <section class="section" id="motion">
+    <div class="head">
+      <div><h2>5. Motion</h2><p class="ask">Does the movement suit the style?</p></div>
+      <span class="label muted">{{Count}} behaviours</span>
+    </div>
+    <ul class="rows">
+      <!-- One row per behaviour. Write None in the row if nothing moves. -->
+      <li><span>{{CSS animation sample, or the element's name}}</span><span class="muted">{{Behaviour, duration and easing}}</span></li>
+    </ul>
+  </section>
+
+  <section class="section" id="style-rules">
+    <div class="head">
+      <div><h2>6. Style rules</h2><p class="ask">Does each rule fit the subject?</p></div>
+      <span class="label muted">{{Count}} rules</span>
+    </div>
+    <table class="rules">
+      <thead><tr><th scope="col">From the references</th><th scope="col">From the subject</th><th scope="col">Rule</th></tr></thead>
+      <tbody>
+        <!-- One row per style rule -->
+        <tr><td>{{Reference trait}}</td><td class="muted">{{Subject source}}</td><td>{{Rule}}</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="end">
+    <h2>Anything to change?</h2>
+    <p>Answer in your Claude session: say what to change, or leave it as it is.</p>
+  </footer>
+</main>
+</body>
+</html>

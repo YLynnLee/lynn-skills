@@ -1,0 +1,331 @@
+{
+ "board_sha256": "e7887ab5892ae0d80bfa5fe2f714f10e6f8d32dde330a36f2bce38b9ea06d6ee",
+ "rows": [
+  {
+   "crop": "paper",
+   "check": "colour",
+   "reference": "#f2ece0 (background, 95%)",
+   "board": "#f2ece0",
+   "difference": "\u0394E 0.0",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "paper",
+   "check": "colour",
+   "reference": "#d6d0c0 (ink, 5%)",
+   "board": "#d7d2be",
+   "difference": "\u0394E 1.8",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "paper",
+   "check": "rules down #d6d0c0",
+   "reference": "every 24px",
+   "board": "every 24px",
+   "difference": "0.0px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "paper",
+   "check": "rules across #d6d0c0",
+   "reference": "every 24px",
+   "board": "every 24px",
+   "difference": "0.0px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "label",
+   "check": "colour",
+   "reference": "#f2ece0 (background, 84%)",
+   "board": "#f2ece0",
+   "difference": "\u0394E 0.0",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "label",
+   "check": "colour",
+   "reference": "#282c37 (ink, 10%)",
+   "board": "#272a37",
+   "difference": "\u0394E 1.6",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "label",
+   "check": "colour",
+   "reference": "#d7d1c3 (ink, 6%)",
+   "board": "#d7d2be",
+   "difference": "\u0394E 2.6",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "label",
+   "check": "type height",
+   "reference": "10.5px",
+   "board": "10.5px",
+   "difference": "0%",
+   "pass": true,
+   "note": "one line, same kind of letters in both"
+  },
+  {
+   "crop": "heading",
+   "check": "colour",
+   "reference": "#f2ece0 (background, 77%)",
+   "board": "#f2ece0",
+   "difference": "\u0394E 0.0",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "heading",
+   "check": "colour",
+   "reference": "#212f48 (ink, 22%)",
+   "board": "#202c45",
+   "difference": "\u0394E 1.2",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "heading",
+   "check": "type height",
+   "reference": "26.0px",
+   "board": "27.0px",
+   "difference": "4%",
+   "pass": true,
+   "note": "one line, same kind of letters in both"
+  },
+  {
+   "crop": "heading",
+   "check": "contrast",
+   "reference": "11.41:1",
+   "board": "11.84:1",
+   "difference": "\u2014",
+   "pass": true,
+   "note": "needs 4.5:1"
+  },
+  {
+   "crop": "notes",
+   "check": "colour",
+   "reference": "#f2ece0 (background, 92%)",
+   "board": "#f2ece0",
+   "difference": "\u0394E 0.0",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "notes",
+   "check": "colour",
+   "reference": "#252936 (ink, 8%)",
+   "board": "#272a36",
+   "difference": "\u0394E 0.7",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "notes",
+   "check": "gap",
+   "reference": "9.25px",
+   "board": "9.25px",
+   "difference": "0.0px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "notes",
+   "check": "gap",
+   "reference": "22px",
+   "board": "21.5px",
+   "difference": "0.5px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "stamp",
+   "check": "colour",
+   "reference": "#f2ece0 (background, 84%)",
+   "board": "#f2ece0",
+   "difference": "\u0394E 0.0",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "stamp",
+   "check": "colour",
+   "reference": "#b34d34 (ink, 11%)",
+   "board": "#96412d",
+   "difference": "\u0394E 7.0",
+   "pass": false,
+   "note": "limit 5",
+   "accepted": "text set in mark text (#ac3f22) for 4.5:1; the border keeps the measured mark"
+  },
+  {
+   "crop": "stamp",
+   "check": "colour",
+   "reference": "#d7d1c3 (ink, 4%)",
+   "board": "#d7d2be",
+   "difference": "\u0394E 2.6",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "stamp",
+   "check": "stroke",
+   "reference": "1.0px",
+   "board": "1.0px",
+   "difference": "0.00px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "stamp",
+   "check": "contrast",
+   "reference": "4.43:1",
+   "board": "5.78:1",
+   "difference": "\u2014",
+   "pass": true,
+   "note": "needs 4.5:1"
+  },
+  {
+   "crop": "linework",
+   "check": "colour",
+   "reference": "#f2ece0 (background, 86%)",
+   "board": "#f2ece0",
+   "difference": "\u0394E 0.0",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "linework",
+   "check": "colour",
+   "reference": "#252e3b (ink, 8%)",
+   "board": "#242b3c",
+   "difference": "\u0394E 3.1",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "linework",
+   "check": "colour",
+   "reference": "#d7d1c3 (ink, 6%)",
+   "board": "#d7d2bf",
+   "difference": "\u0394E 2.2",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "linework",
+   "check": "stroke",
+   "reference": "1.5px",
+   "board": "2.0px",
+   "difference": "0.50px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "dimension",
+   "check": "colour",
+   "reference": "#f2ece0 (background, 91%)",
+   "board": "#f2ece0",
+   "difference": "\u0394E 0.0",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "dimension",
+   "check": "colour",
+   "reference": "#d7d1c3 (ink, 5%)",
+   "board": "#d7d2c0",
+   "difference": "\u0394E 1.9",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "dimension",
+   "check": "colour",
+   "reference": "#9e513e (ink, 4%)",
+   "board": "#a0513d",
+   "difference": "\u0394E 0.5",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "dimension",
+   "check": "stroke",
+   "reference": "1.0px",
+   "board": "1.5px",
+   "difference": "0.50px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "title-block",
+   "check": "colour",
+   "reference": "#f2ece0 (background, 85%)",
+   "board": "#f2ece0",
+   "difference": "\u0394E 0.0",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "title-block",
+   "check": "colour",
+   "reference": "#25313f (ink, 8%)",
+   "board": "#252936",
+   "difference": "\u0394E 4.5",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "title-block",
+   "check": "colour",
+   "reference": "#d7d1c3 (ink, 7%)",
+   "board": "#d7d1c1",
+   "difference": "\u0394E 0.8",
+   "pass": true,
+   "note": "limit 5"
+  },
+  {
+   "crop": "title-block",
+   "check": "stroke",
+   "reference": "1.0px",
+   "board": "1.0px",
+   "difference": "0.00px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "title-block",
+   "check": "rules down #25313f",
+   "reference": "every 31px",
+   "board": "every 31px",
+   "difference": "0.0px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "title-block",
+   "check": "rules down #d7d1c3",
+   "reference": "every 24px",
+   "board": "every 24px",
+   "difference": "0.0px",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "crop": "title-block",
+   "check": "rules across #d7d1c3",
+   "reference": "every 24px",
+   "board": "every 24px",
+   "difference": "0.0px",
+   "pass": true,
+   "note": ""
+  }
+ ],
+ "problems": []
+}

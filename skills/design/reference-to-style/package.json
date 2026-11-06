@@ -1,0 +1,8 @@
+{
+  "name": "reference-to-style",
+  "private": true,
+  "description": "Browser helper for the reference-to-style skill: npm install here, then npx playwright install chromium",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "dependencies": { "playwright": "^1.40.0" }
+}

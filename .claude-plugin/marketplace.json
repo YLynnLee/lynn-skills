@@ -1,0 +1,16 @@
+{
+  "name": "ylynnlee",
+  "owner": {
+    "name": "YLynnLee",
+    "url": "https://github.com/YLynnLee"
+  },
+  "plugins": [
+    {
+      "name": "lynn-skills",
+      "source": "./",
+      "description": "Agent skills by YLynnLee: design references to measured styles, and more.",
+      "category": "design",
+      "keywords": ["skills", "design", "style-guide", "design-tokens", "references"]
+    }
+  ]
+}
