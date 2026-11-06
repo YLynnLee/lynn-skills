@@ -65,6 +65,33 @@ Update with `npx skills@latest update`; re-run `add` to pick up new skills.
 
 Some skills ship scripts with their own dependencies; each skill's docs page lists them.
 
+## Getting started
+
+After installing, there's no command to learn. Describe the task, and the agent picks up the skill that fits. You can also name the skill to be sure, such as "use reference-to-style".
+
+Taking [reference-to-style](./docs/design/reference-to-style.md) as the example:
+
+1. **Check you have what it needs.**
+
+   | What | Needed for |
+   |---|---|
+   | Python 3.9+ with Pillow and numpy | Everything: it measures colours, sizes and spacing with these |
+   | Node 18+ with Playwright and Chromium | Live websites as references, and checking the finished board. Without them, screenshots still work and the board is marked unverified |
+
+   You don't have to set these up first. On every run the skill checks them and prints the exact install command for anything missing.
+
+2. **Give it references and ask.** Screenshots, website links, Figma frames or a moodboard all work. For example:
+
+   > Make a style for my site inspired by these two screenshots.
+
+   > This page looks too generic. Get inspired by https://example.com instead.
+
+3. **Review the board.** The agent makes the early choices itself and stops once, when the board is ready. Open `board.html` in a browser, then ask for changes such as "more of the grid" or "less red", or say it's fine.
+
+4. **Use the style.** It's saved in `design/styles/<name>/`: a visual board (`board.html`), a written guide with every measured value (`style.md`), and an accuracy report (`verify.md`). Your app or site doesn't change. When you want the style used, say so, such as "apply `<name>` everywhere".
+
+To see a finished run before trying it, open the [drafting-sheet example](./docs/design/reference-to-style.md#what-it-does). Each skill's docs page has the full details, setup fixes and common questions.
+
 ## Reference
 
 Skills split on one axis: who can start them. **User-invoked** skills run only when you type them (e.g. `/session-log`); their job is to orchestrate a workflow. **Model-invoked** skills can be started by you _or_ picked up by the agent on its own when the task fits; they hold a reusable discipline.
