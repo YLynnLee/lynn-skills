@@ -114,7 +114,13 @@ def main():
                 results[item["name"]] = m
     else:
         src = args.source if os.path.isabs(args.source) else os.path.join(folder, args.source)
-        opened = Image.open(src)
+        if not os.path.isfile(src):
+            sys.exit(f"{args.source}: not found. Image paths are relative to the style folder ({folder}),\n"
+                     f"so save the screenshot in {os.path.join(folder, 'references')} and pass references/<file>.")
+        try:
+            opened = Image.open(src)
+        except (OSError, Image.UnidentifiedImageError) as err:
+            sys.exit(f"{args.source}: can't be read as an image ({err}). Save it as a PNG or JPEG.")
         quality = pixels.jpeg_quality(opened)
         if quality:
             print(f"Lossy reference (JPEG quality ~{quality}): thin colours also get a 'likely' value; prefer a PNG if you have one.")

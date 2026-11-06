@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS = os.path.join(HERE, "..", "scripts")
@@ -131,6 +132,29 @@ class Example(unittest.TestCase):
             self.assertEqual(check.returncode, 0, check.stdout + check.stderr)
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
+
+
+class BadSource(unittest.TestCase):
+    def run_measure(self, source):
+        tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tmp, True)
+        folder = os.path.join(tmp, "style")
+        os.makedirs(os.path.join(folder, "references"))
+        Path(folder, "references", "notes.png").write_text("not an image", encoding="utf-8")
+        return subprocess.run([sys.executable, os.path.join(SCRIPTS, "measure.py"), folder, source],
+                              capture_output=True, text=True)
+
+    def test_missing_image_explains_the_path(self):
+        run = self.run_measure("ref.png")
+        self.assertNotEqual(run.returncode, 0)
+        self.assertNotIn("Traceback", run.stderr)
+        self.assertIn("relative to the style folder", run.stderr)
+
+    def test_unreadable_image_is_reported(self):
+        run = self.run_measure("references/notes.png")
+        self.assertNotEqual(run.returncode, 0)
+        self.assertNotIn("Traceback", run.stderr)
+        self.assertIn("can't be read as an image", run.stderr)
 
 
 if __name__ == "__main__":

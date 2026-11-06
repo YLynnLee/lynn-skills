@@ -6,7 +6,9 @@ Skill: [`skills/design/reference-to-style/SKILL.md`](../../skills/design/referen
 
 ## What it does
 
-It never touches your app. It writes a style guide (`style.md`) and a one-page visual board (`board.html`) into `design/styles/<slug>/`, makes the early calls itself, and stops once, at the board, so you can tweak it. Nothing needs approving: every saved style is ready, and you name the one you want when you use it.
+Defining a style never touches your app. It writes a style guide (`style.md`) and a one-page visual board (`board.html`) into `design/styles/<slug>/`, makes the early calls itself, and stops once, at the board, so you can tweak it. Nothing needs approving: every saved style is ready, and you name the one you want when you use it.
+
+**Applies it when you ask.** Say "apply `<slug>` everywhere" (or name a page) and the skill rolls the saved style out from the guide alone: it adds the guide's tokens to your project, then restyles each token and component its Mapping section lists, keeping your content and structure. It works with plain CSS, Tailwind, CSS-in-JS themes and Webflow variables.
 
 **Measured, not eyeballed.** Vision models see what a reference does but misjudge exact colours, sizes and spacing. So the skill measures crops of each reference with scripts. It then renders the board in a headless browser, measures it the same way, and fixes it until the two match. `verify.md` shows the numbers, so you only judge the direction and how strong each trait is.
 
@@ -31,8 +33,9 @@ design/styles/
 
 - You have references and want a style defined from them: "make it in the style of this", "get inspired by these".
 - A design copies a reference too closely, feels generic, or doesn't fit its subject.
+- You have a style saved in `design/styles/` and want it applied: "apply `<slug>` everywhere".
 
-Not when you want an exact build of your own Figma frame (build the frame), or when the project already has its style (roll it out instead, for example with `apply-everywhere`).
+Not when you want an exact build of your own Figma frame (build the frame).
 
 ## Setup
 
@@ -57,7 +60,7 @@ python3 scripts/doctor.py
 
 ## Common questions
 
-**Does it change my site?** No. `design/styles/` is the only place it writes. The guide's Mapping section lists every token and component in your project and what each becomes; roll it out with `apply-everywhere`, or use the Mapping as a checklist.
+**Does it change my site?** Not while defining a style: `design/styles/` is the only place it writes. It changes your site only when you name a saved style to apply. Then it works through the guide's Mapping section, which lists every token and component in your project and what each becomes, one row at a time, and tells you anything it left undone.
 
 **Can I keep several styles?** Yes. Each run gets its own folder and slug, and `index.md` lists them all. Tokens are prefixed with the slug, so styles can share a page.
 
@@ -71,6 +74,8 @@ python3 scripts/doctor.py
 
 **`python3` isn't found on Windows.** Use `py -3` in its place.
 
+**measure says `not found`.** Image paths are relative to the style folder: save the screenshot in `design/styles/<slug>/references/` and pass `references/<file>.png`.
+
 **verify reports `font "…" did not load`.** The board's web fonts couldn't download. Fix the network or the font link; don't change sizes to compensate.
 
 ## It's working if
@@ -79,6 +84,7 @@ python3 scripts/doctor.py
 - `verify.md` says every measurement matches, or names each one that differs on purpose.
 - Every token in `style.md` names its source: a measured crop, a rule it was derived by, or a stated choice.
 - Asking for "more of X" or "less of Y" changes where a trait appears, not its measured values.
+- After "apply `<slug>` everywhere", the changed pages look like the board, and every Mapping row is either done or reported with a reason.
 
 ## Tests
 

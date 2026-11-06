@@ -8,4 +8,4 @@ None yet.
 
 ## Model-invoked
 
-- **[reference-to-style](./reference-to-style/SKILL.md)**: Turn design references into a measured style, shown on a visual board and backed by a written guide. [Docs](../../docs/design/reference-to-style.md)
+- **[reference-to-style](./reference-to-style/SKILL.md)**: Turn design references into a measured style, shown on a visual board and backed by a written guide, then apply it to your site when you ask. [Docs](../../docs/design/reference-to-style.md)

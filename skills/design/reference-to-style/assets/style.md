@@ -72,7 +72,7 @@ token-prefix: --{{slug}}-
 
 ## 8. Mapping to the project
 
-<!-- What apply-everywhere rolls out. One row per existing token, class or variable, and one per component type, found when reading the project. Nothing in the project is left unmapped: write Keep or Drop with a reason where nothing new replaces it. -->
+<!-- What applying the style works from (references/rollout.md). One row per existing token, class or variable, and one per component type, found when reading the project. Nothing in the project is left unmapped: write Keep or Drop with a reason where nothing new replaces it. -->
 
 | Existing token, class, variable or component | Where it lives | Becomes | Note |
 |---|---|---|---|
