@@ -18,4 +18,4 @@ Terms used across this repo and its skills.
 
 **Trait**: one distinctive part of a style (a palette, a type character, a texture, a motif). Each has a **strength**: `quiet`, `full` or `strong`.
 
-**Mapping**: the guide section that lists every token and component in a project and what each becomes. What a rollout skill such as `apply-everywhere` works from.
+**Mapping**: the guide section that lists every token and component in a project and what each becomes. What applying a style works from.

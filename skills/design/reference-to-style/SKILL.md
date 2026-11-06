@@ -1,13 +1,13 @@
 ---
 name: reference-to-style
-description: Use when the user shares design references (screenshot, website, Pinterest pin, Figma frame, game UI, drawing, moodboard) and wants a UI style defined from them, says "in the style of" or "get inspired by", or says a design copies a reference too closely, feels generic, or doesn't fit the subject.
+description: Use when the user shares design references (screenshot, website, Pinterest pin, Figma frame, game UI, drawing, moodboard) and wants a UI style defined from them, says "in the style of" or "get inspired by", or says a design copies a reference too closely, feels generic, or doesn't fit the subject. Also use when the user asks to apply a style saved in design/styles/ to the app or site, such as "apply <style> everywhere".
 license: MIT
 compatibility: Needs Python 3.9+ with Pillow and numpy. Node 18+ with Playwright and Chromium is needed for live-site references and for verifying the board; without it, image references still work and the board is reported as unverified.
 ---
 
 # Reference to style
 
-Turns references into a style for the whole site, shown on a visual board (`board.html`) and backed by a measured style guide (`style.md`). The look comes from the references; the content comes from the subject. The skill only defines the style: it never changes the app or site.
+Turns references into a style for the whole site, shown on a visual board (`board.html`) and backed by a measured style guide (`style.md`). The look comes from the references; the content comes from the subject. Defining a style never changes the app or site. Applying one does, but only when the user names a saved style to use (see Applying a saved style).
 
 **Align the style once, before any page changes.** The guide is the source of truth: build every visual from it, and put every correction into it first, so nothing built from it can drift from what you saw on the board.
 
@@ -18,7 +18,7 @@ Turns references into a style for the whole site, shown on a visual board (`boar
 ## When not to use
 
 - The user wants an exact match to their own Figma frame. Build the frame.
-- The project already has its style. Roll it out instead (with `apply-everywhere`, if installed).
+- The project already has a style saved in `design/styles/`. Apply it instead (see Applying a saved style).
 
 ## Requires
 
@@ -45,7 +45,7 @@ Make every decision the run needs yourself, and stop once: at the board. The boa
 > 2. Change something else: say what
 > 3. Nothing: the style is saved as it is
 >
-> **Using it:** the style is saved in `design/styles/<slug>/`. Name it when you want it used, such as "apply `<slug>` everywhere". The app or site doesn't change.
+> **Using it:** the style is saved in `design/styles/<slug>/`. Name it when you want it used, such as "apply `<slug>` everywhere". Until then the app or site doesn't change.
 
 With a question tool, ask it there too, starting with "Your input needed". Nothing needs approving: every saved style is ready to use, and the user picks one by name later.
 
@@ -95,7 +95,7 @@ With a question tool, ask it there too, starting with "Your input needed". Nothi
    - **Evidence:** one row per measured crop, numbers copied from `measure.py`'s output.
    - **Tokens:** every token says where it came from: `crop:<name>` (the value is measured there; a colour must match that crop's reading or its `likely` value), `derived: <rule>` (built from measured tokens, such as a hover tone or a text colour darkened to 4.5:1), or `chosen: <reason>` for what no reference shows, such as states and body type. Sizes come from measurements too: font size is the cap height (the ink height of a type crop of capitals) ÷ the font's cap height ratio. Every rule names a real subject source and uses nothing from the Leave column. Prefix every token with `--<slug>-`, so styles can share a page without clashing.
    - **Components:** give each component type a property table (property, then token or exact value, for every state), so it can be rebuilt without guessing. Use tokens wherever one exists. Follow each trait's strength: a component outside a quiet trait's named places uses the style's plainer tokens instead, such as the body face or the ink colour.
-   - **Mapping:** map every existing token, class or variable from step 2, and every component type, to its new token or component spec. This is what `apply-everywhere` rolls out, so leave nothing in the project unmapped: write `Keep` or `Drop` with a reason where nothing replaces it.
+   - **Mapping:** map every existing token, class or variable from step 2, and every component type, to its new token or component spec. This is what applying the style works from, so leave nothing in the project unmapped: write `Keep` or `Drop` with a reason where nothing replaces it.
 
 5. **Show the style, then iterate.** Read `references/board.md`, copy `assets/board.html` as a file copy (not by retyping it) and fill in its placeholders from the guide alone: every component type with states, a Styles section, one very small real section, and motion, each tagged with `data-crop` for the crop it came from. Then verify it against the references and check it against the guide, and fix every failure yourself, for at most three rounds:
 
@@ -110,7 +110,11 @@ With a question tool, ask it there too, starting with "Your input needed". Nothi
 
    **Stop for the review** with the block from Decisions: anything to change? Accuracy is shown by `verify.md`, along with anything still failing after three rounds, so the user judges direction and strength only. For each round of feedback, update the guide, rebuild only the affected parts of the board, then run verify and the check once and fix what they report for at most three rounds without undoing the user's changes. Update the index if the name or subject list changed, reopen the board and ask again. Every round ends measured, so the saved style is always accurate, whenever the user stops. To turn a trait up or down, change its Strength (write `(user feedback)` after it) and the components it reaches; values stay measured, so this needs no `data-accept`. If the user wants a trait bolder than the reference itself (larger, heavier, more saturated), that changes a value: treat it as below. A change the user asks for is on purpose even when it moves away from a reference: give the token `chosen: user feedback` and mark its sample `data-accept` with the same reason, so verify reports it as on purpose instead of failing it, and never undo it to make verify pass. If the user rejects the direction itself rather than details, don't patch tokens: go back to step 3, re-read the references, choose a new direction, rebuild and stop for the review again.
 
-   The run ends when the user has nothing to change or moves on to something else. There is no approval step. To use the style later, the user names it: `apply-everywhere` (if installed) rolls it out from the guide's Mapping section, or the Mapping works as a checklist on its own.
+   The run ends when the user has nothing to change or moves on to something else. There is no approval step. To use the style later, the user names it, and the skill applies it (see Applying a saved style).
+
+## Applying a saved style
+
+When the user names a saved style to use, such as "apply `<slug>` everywhere" or "use `<slug>` on the pricing page", read `references/rollout.md` and follow it. It works from the guide alone: it adds the guide's tokens to the project, then works through the Mapping row by row, restyling each component from its property table without changing its content or structure. Skip steps 1–5: the style is already defined.
 
 ## Example
 
