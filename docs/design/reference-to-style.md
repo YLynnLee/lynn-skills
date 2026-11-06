@@ -25,7 +25,7 @@ design/styles/
     references/       the reference screenshots and crops
 ```
 
-[`examples/drafting-sheet/`](../../skills/design/reference-to-style/examples/drafting-sheet/) is a finished run. Start with its `style.md` and `verify.md`.
+[`examples/drafting-sheet/`](../../skills/design/reference-to-style/examples/drafting-sheet/) is a finished run. Start with its `style.md` and `verify.md`. Its reference, `drawing-sheet.jpg`, is a synthetic drawing made for this demo: the part, drawing number and names on it are invented.
 
 ## When to reach for it
 
