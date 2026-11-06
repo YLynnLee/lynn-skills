@@ -75,7 +75,7 @@ Design and front-end style work. [Bucket README](./skills/design/README.md)
 
 **Model-invoked**
 
-- **[reference-to-style](./skills/design/reference-to-style/SKILL.md)**: Turn design references (screenshots, live sites, Figma frames, moodboards) into a measured style, shown on a visual board and backed by a written guide. Never changes your app. [Docs](./docs/design/reference-to-style.md)
+- **[reference-to-style](./skills/design/reference-to-style/SKILL.md)**: Turn design references (screenshots, live sites, Figma frames, moodboards) into a measured style, shown on a visual board and backed by a written guide, then applies it to your site when you ask. [Docs](./docs/design/reference-to-style.md)
 
 ### Not in the plugin
 
