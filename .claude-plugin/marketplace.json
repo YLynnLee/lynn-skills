@@ -1,5 +1,6 @@
 {
   "name": "ylynnlee",
+  "description": "Agent skills by YLynnLee, for Claude Code, Codex, Copilot and more.",
   "owner": {
     "name": "YLynnLee",
     "url": "https://github.com/YLynnLee"
@@ -10,7 +11,13 @@
       "source": "./",
       "description": "Agent skills by YLynnLee: design references to measured styles, and more.",
       "category": "design",
-      "keywords": ["skills", "design", "style-guide", "design-tokens", "references"]
+      "keywords": [
+        "skills",
+        "design",
+        "style-guide",
+        "design-tokens",
+        "references"
+      ]
     }
   ]
 }

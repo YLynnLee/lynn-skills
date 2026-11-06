@@ -1,0 +1,20 @@
+name: Idea or feedback
+description: A change to an existing skill, based on something that happened in a real session.
+labels: [needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: Read [SCOPE.md](https://github.com/YLynnLee/lynn-skills/blob/main/SCOPE.md) first. Ideas for new skills go to Discussions.
+  - type: input
+    id: skill
+    attributes: { label: Skill }
+    validations: { required: true }
+  - type: textarea
+    id: observed
+    attributes:
+      label: What went wrong
+      description: The real session where the skill fell short. One problem per issue.
+    validations: { required: true }
+  - type: textarea
+    id: change
+    attributes: { label: What you'd change }

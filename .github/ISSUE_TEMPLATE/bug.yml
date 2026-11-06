@@ -1,0 +1,28 @@
+name: Bug
+description: A skill did the wrong thing or broke.
+labels: [needs-triage]
+body:
+  - type: input
+    id: skill
+    attributes: { label: Skill, placeholder: reference-to-style }
+    validations: { required: true }
+  - type: input
+    id: agent
+    attributes: { label: Agent and version, placeholder: "Claude Code 2.x, Codex, Cursor, …" }
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes:
+      label: What you did
+      description: The prompt or command, and anything the skill needed (references, files). Redact secrets.
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: What you expected }
+    validations: { required: true }
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Include error output, or the output of the skill's doctor script if it has one.
+    validations: { required: true }

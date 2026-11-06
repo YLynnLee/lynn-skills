@@ -55,53 +55,36 @@ Re-run to update.
 <summary><b>Any other agent</b>, or editable files (Cursor, OpenCode, Windsurf, Amp, …)</summary>
 
 ```bash
-npx skills@latest add YLynnLee/lynn-skills            # choose agent and skills interactively
-npx skills@latest add YLynnLee/lynn-skills -a cursor  # or name the agent
-npx skills@latest add YLynnLee/lynn-skills --skill reference-to-style  # one skill only
+npx skills@latest add YLynnLee/lynn-skills -a <agent>   # omit -a to choose
+npx skills@latest add YLynnLee/lynn-skills --skill reference-to-style   # one skill only
 ```
 
-Update with `npx skills@latest update`.
+Update with `npx skills@latest update`; re-run `add` to pick up new skills.
 
 </details>
 
-<details>
-<summary><b>By hand</b></summary>
+Some skills ship scripts with their own dependencies; each skill's docs page lists them.
 
-Clone the repo and link (or copy) a skill folder into your agent's skills directory:
+## Reference
 
-```bash
-git clone https://github.com/YLynnLee/lynn-skills ~/lynn-skills
-ln -s ~/lynn-skills/skills/design/reference-to-style ~/.claude/skills/reference-to-style
-```
-
-Swap `~/.claude/skills` for your agent's skills folder.
-
-</details>
-
-Some skills ship scripts with their own dependencies. Each skill's README lists them and how to check them.
-
-## Skills
+Skills split on one axis: who can start them. **User-invoked** skills run only when you type them (e.g. `/session-log`); their job is to orchestrate a workflow. **Model-invoked** skills can be started by you _or_ picked up by the agent on its own when the task fits; they hold a reusable discipline.
 
 ### Design
 
-- **[reference-to-style](./skills/design/reference-to-style/)**: turns design references (screenshots, live sites, Figma frames, drawings, moodboards) into a measured style for your site, shown on a visual board and backed by a written style guide. Colours, sizes and spacing are measured from the references by scripts, not eyeballed, and the board is checked against them until it matches. Never changes your app. [Read more](./skills/design/reference-to-style/README.md).
+Design and front-end style work. [Bucket README](./skills/design/README.md)
 
-## Layout
+**Model-invoked**
 
-```
-skills/
-  <category>/
-    <skill-name>/
-      SKILL.md        the skill: frontmatter (name, description) + instructions
-      README.md       for humans: what it does, install, dependencies
-      scripts/        optional helper scripts
-      references/     optional docs the skill reads on demand
-      assets/         optional templates
-.claude-plugin/       plugin + marketplace manifests (Claude Code, Codex, Copilot)
-scripts/validate.py   checks every skill is well-formed and listed
-```
+- **[reference-to-style](./skills/design/reference-to-style/SKILL.md)**: Turn design references (screenshots, live sites, Figma frames, moodboards) into a measured style, shown on a visual board and backed by a written guide. Never changes your app. [Docs](./docs/design/reference-to-style.md)
 
-Adding a skill: see [CONTRIBUTING.md](./CONTRIBUTING.md).
+### Not in the plugin
+
+- [`in-progress/`](./skills/in-progress/README.md): beta skills, installable one at a time with `npx skills@latest add YLynnLee/lynn-skills --skill <name>`.
+- [`misc/`](./skills/misc/README.md) and [`deprecated/`](./skills/deprecated/README.md): kept for reference.
+
+## Contributing
+
+Issues welcome: see [CONTRIBUTING.md](./CONTRIBUTING.md) and [SCOPE.md](./SCOPE.md). Repo layout and rules for adding skills: [CLAUDE.md](./CLAUDE.md).
 
 ## License
 

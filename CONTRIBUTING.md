@@ -1,27 +1,29 @@
 # Contributing
 
-This is a personal collection, so new skills come from me. Bug reports and fixes to existing skills are welcome: open an issue with what you ran, what you expected and what happened.
+Every issue is judged against [SCOPE.md](./SCOPE.md). Read it first.
 
-## Adding a skill (checklist)
+| You have | Go to |
+|---|---|
+| A bug in a skill | [Bug report](https://github.com/YLynnLee/lynn-skills/issues/new?template=bug.yml) |
+| A change to an existing skill | [Idea or feedback](https://github.com/YLynnLee/lynn-skills/issues/new?template=idea.yml) |
+| A question, or an idea for a new skill | [Discussions](https://github.com/YLynnLee/lynn-skills/discussions) |
 
-1. **Folder.** Create `skills/<category>/<skill-name>/`. Reuse a category if one fits (`design/`, …); otherwise add a new one.
-2. **`SKILL.md`.** Start with frontmatter:
+Pull requests are open to collaborators only, so describe the fix in an issue instead.
 
-   ```markdown
-   ---
-   name: <skill-name>          # same as the folder
-   description: <what it does>. Use when <the situations that should trigger it>.
-   license: MIT
-   ---
-   ```
+## Issues written with AI
 
-   Then the instructions. Long detail goes in `references/`, templates in `assets/`, helper code in `scripts/`.
-3. **`README.md`** in the skill folder, for humans: what it does, dependencies and how to check them, troubleshooting.
-4. **Register it.** Add `"./skills/<category>/<skill-name>"` to the `skills` array in `.claude-plugin/plugin.json`, and bump its `version`.
-5. **List it** in the root `README.md` under its category (add the `--path skills/<category>` Gemini line if the category is new).
-6. **Tests (if it has scripts).** Put them in the skill's `tests/` and add `.github/workflows/<skill-name>.yml`, filtered to `skills/<category>/<skill-name>/**`. Copy `reference-to-style.yml` as a start.
-7. **Validate.**
+- One problem per issue.
+- Short. If it doesn't fit on one screen, cut it.
+- Repro first: what you ran, which agent, what you expected, what happened.
+- No pasted specs or rewritten `SKILL.md` files.
 
-   ```bash
-   python3 scripts/validate.py
-   ```
+## Adding a skill (maintainers)
+
+1. **Bucket.** Pick one (see the table in `CLAUDE.md`). New skills that need real-world use first go in `skills/in-progress/`. A new promoted bucket needs a `README.md`, a section in the top-level README, and a Gemini `--path` line in `.agents/install-block.md` and the README.
+2. **Folder.** `skills/<bucket>/<skill-name>/` with `SKILL.md`, `agents/openai.yaml` and `LICENSE`, following `.agents/writing-skills.md`. Decide user-invoked or model-invoked first: `.agents/invocation.md`.
+3. **Scripts and tests**, if any: `tests/` in the folder, a `doctor` check for dependencies, and `.github/workflows/<skill-name>.yml` filtered to the folder (copy `reference-to-style.yml`).
+4. **Register** a promoted skill: `.claude-plugin/plugin.json` `skills` array, the top-level README, the bucket README, and a docs page at `docs/<bucket>/<skill-name>.md`.
+5. **Changeset:** `npm run changeset`, minor.
+6. **Check:** `python3 scripts/validate.py` prints `0 problem(s)`.
+
+Moving a skill between buckets (graduating from `in-progress/`, retiring to `deprecated/`) is the same: move the folder, update the lists, add a changeset, validate.
