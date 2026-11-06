@@ -1,6 +1,6 @@
 ---
 name: reference-to-style
-description: Use when the user shares design references (screenshot, website, Pinterest pin, Figma frame, game UI, drawing, moodboard) and wants a UI style defined from them, says "in the style of" or "get inspired by", or says a design copies a reference too closely, feels generic, or doesn't fit the subject. Also use when the user asks to apply a style saved in design/styles/ to the app or site, such as "apply <style> everywhere".
+description: Turn design references (screenshot, live website, Pinterest pin, Figma frame, game UI, drawing, moodboard) into a measured UI style (palette, typography, spacing and design tokens), written to a style guide and shown on a visual board. Use when the user shares references and wants a look defined from them, says "in the style of", "get inspired by", "make it look like this" or "extract the colours and fonts", or says a design copies a reference too closely, feels generic, or doesn't fit the subject. Also use when the user asks to apply a style saved in design/styles/ to the app or site, such as "apply <style> everywhere".
 license: MIT
 compatibility: Needs Python 3.9+ with Pillow and numpy. Node 18+ with Playwright and Chromium is needed for live-site references and for verifying the board; without it, image references still work and the board is reported as unverified.
 ---

@@ -1,6 +1,6 @@
 # lynn-skills
 
-Skills I build for AI agents, and write about. Each one is a folder with a `SKILL.md`, in the open [Agent Skills](https://agentskills.io) format, so it works in Claude Code, Codex, GitHub Copilot, Gemini CLI, Cursor and any other agent that reads `SKILL.md` skills.
+Skills I build for AI agents, and write about, starting with design: turn screenshots, live sites and moodboards into a measured style guide and design tokens. Each one is a folder with a `SKILL.md`, in the open [Agent Skills](https://agentskills.io) format, so it works in Claude Code, Codex, GitHub Copilot, Gemini CLI, Cursor and any other agent that reads `SKILL.md` skills.
 
 ## Install
 
