@@ -27,6 +27,7 @@ Before step 1, run `python3 <this skill>/scripts/doctor.py` (on Windows, `py -3`
 - **Exit 0:** ready.
 - **Exit 1:** Python packages are missing. Show the user the printed commands and wait; nothing can be measured without them.
 - **Exit 2:** the browser can't run. Offer the printed install commands. If the user can't install it, carry on with image references only (ask for screenshots of live sites), run `check.py` with `--unverified`, and say at the review that the board's accuracy is not proven.
+- **No Python at all** (`python3` isn't found, nor `py -3` on Windows): `doctor.py` can't run. Tell the user the skill needs Python 3.9 or later, from python.org or their system's package manager, and wait. Don't install Python yourself.
 
 ## Decisions
 

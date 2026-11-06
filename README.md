@@ -78,7 +78,7 @@ Taking [reference-to-style](./docs/design/reference-to-style.md) as the example:
    | Python 3.9+ with Pillow and numpy | Everything: it measures colours, sizes and spacing with these |
    | Node 18+ with Playwright and Chromium | Live websites as references, and checking the finished board. Without them, screenshots still work and the board is marked unverified |
 
-   You don't have to set these up first. On every run the skill checks them and prints the exact install command for anything missing.
+   You don't have to set these up first. On every run the skill checks them and prints the exact install command for anything missing. It never installs anything itself: it shows you the commands and waits for you. If Python isn't installed at all, it tells you to install Python 3.9 or later and waits.
 
 2. **Give it references and ask.** Screenshots, website links, Figma frames or a moodboard all work. For example:
 

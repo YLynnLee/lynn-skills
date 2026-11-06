@@ -55,6 +55,8 @@ python3 scripts/doctor.py
 
 `doctor.py` prints `OK` or `MISSING` for each dependency, with the exact fix. The skill runs it before every run too. Without Node or Playwright it still works from image references, but tells you the board is unverified.
 
+The skill never installs anything itself. It shows you the commands and waits. If Python isn't installed at all, `doctor.py` can't run, so the skill tells you to install Python 3.9 or later and waits.
+
 ## Common questions
 
 **Does it change my site?** No. `design/styles/` is the only place it writes. The guide's Mapping section lists every token and component in your project and what each becomes; roll it out with `apply-everywhere`, or use the Mapping as a checklist.
