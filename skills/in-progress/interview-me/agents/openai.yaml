@@ -1,0 +1,5 @@
+interface:
+  display_name: "Interview Me"
+  short_description: "Interview you about an idea until it's solid enough to write from"
+policy:
+  allow_implicit_invocation: false
