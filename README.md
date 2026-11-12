@@ -104,6 +104,14 @@ Design and front-end style work. [Bucket README](./skills/design/README.md)
 
 - **[reference-to-style](./skills/design/reference-to-style/SKILL.md)**: Turn design references (screenshots, live sites, Figma frames, moodboards) into a measured style, shown on a visual board and backed by a written guide, then applies it to your site when you ask. [Docs](./docs/design/reference-to-style.md)
 
+### Productivity
+
+Thinking and writing work. [Bucket README](./skills/productivity/README.md)
+
+**User-invoked**
+
+- **[interview-me](./skills/productivity/interview-me/SKILL.md)**: Interview you about an idea, notes or a transcript, one question at a time, until it's solid enough to write from. [Docs](./docs/productivity/interview-me.md)
+
 ### Not in the plugin
 
 - [`in-progress/`](./skills/in-progress/README.md): beta skills, installable one at a time with `npx skills@latest add YLynnLee/lynn-skills --skill <name>`.

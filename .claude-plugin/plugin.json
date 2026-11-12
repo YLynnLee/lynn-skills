@@ -10,6 +10,7 @@
   "repository": "https://github.com/YLynnLee/lynn-skills",
   "license": "MIT",
   "skills": [
-    "./skills/design/reference-to-style"
+    "./skills/design/reference-to-style",
+    "./skills/productivity/interview-me"
   ]
 }
