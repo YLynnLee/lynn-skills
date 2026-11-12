@@ -45,9 +45,10 @@ In VS Code: run **Chat: Install Plugin From Source** and enter `https://github.c
 
 ```bash
 gemini skills install https://github.com/YLynnLee/lynn-skills.git --path skills/design
+gemini skills install https://github.com/YLynnLee/lynn-skills.git --path skills/productivity
 ```
 
-Re-run to update.
+One command per bucket. Re-run them to update.
 
 </details>
 
