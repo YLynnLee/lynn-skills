@@ -18,6 +18,7 @@ Skills live in bucket folders: `skills/<bucket>/<skill-name>/SKILL.md`.
 - Every bucket has a `README.md`. Promoted buckets and the top-level README group skills into **User-invoked** and **Model-invoked**; the others use a flat list.
 - Every promoted skill has a docs page at `docs/<bucket>/<skill-name>.md`. See `.agents/writing-skills.md` for its sections.
 - Install commands are copied verbatim from `.agents/install-block.md` into the README.
+- Gemini CLI installs one bucket per command, so a new promoted bucket needs its own `gemini skills install ... --path skills/<bucket>` line in `.agents/install-block.md`.
 
 ## Writing skills
 
