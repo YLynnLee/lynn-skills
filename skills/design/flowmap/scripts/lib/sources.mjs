@@ -218,7 +218,7 @@ export function checkSources(graph, root) {
     for (const skill of siblings) {
       const mention = new RegExp(`(^|[^\\w/-])/${skill.replace(/[-]/g, '\\-')}(?![\\w-])`);
       if (mention.test(text) && !shown.includes(skill.toLowerCase())) {
-        warnings.push(`${relative(root, file)} mentions /${skill}, which the graph does not show. Add it, or name it in \`leavesOut\`.`);
+        warnings.push(`${relative(root, file).split(sep).join('/')} mentions /${skill}, which the graph does not show. Add it, or name it in \`leavesOut\`.`);
       }
     }
   }
