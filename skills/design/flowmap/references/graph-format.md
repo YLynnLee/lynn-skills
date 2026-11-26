@@ -88,7 +88,7 @@ Each rule has `says`, the promise in the reader's words, and exactly one of thes
 
 `from` names the box the paths start at. Without it, they start at every box no arrow points to. On a broken path, the failing box is marked red (`breaks`) and its arrows red; if the path uses an unsourced box or arrow, the failing box and arrows are marked orange (`mayBreak`) instead, and the report says so, because the break may come from a guess. Leading boxes on a broken path get a blue border (`bugPath`).
 
-A `through` rule about a box that no path reaches says nothing, so the report marks it `?` ("cannot check") rather than ✓. Add the arrow in, or fix `from`.
+A `through` rule about a box that no path reaches says nothing, so the report marks it `?` ("cannot check") rather than ✓. Add the arrow in, or fix `from`. So does a rule whose `to` and `through` are the same box, since every path to a box passes it.
 
 The rules are checked against the graph, not the system. A rule that holds is only as true as the graph's arrows.
 

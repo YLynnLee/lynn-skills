@@ -560,7 +560,7 @@ main.fm-dragging .panel { transition: none; }
 .k-box { fill: var(--box); stroke: var(--box-line); stroke-width: 1; }
 .k-guess { fill: none; stroke: var(--guess); stroke-width: 2; stroke-dasharray: 4 3; }
 .k-main { stroke: var(--ink); stroke-width: 3; }
-.k-guess-line { stroke: var(--guess); stroke-width: 2; stroke-dasharray: 3 3; }
+.k-guess-line { stroke: var(--line); stroke-width: 2; stroke-dasharray: 3 3; }
 .k-break-box { fill: color-mix(in srgb, var(--bad) 14%, var(--box)); stroke: var(--bad); stroke-width: 2.5; }
 .k-maybe-box { fill: color-mix(in srgb, var(--guess) 14%, var(--box)); stroke: var(--guess); stroke-width: 2.5; }
 .k-path-box { fill: var(--box); stroke: var(--accent); stroke-width: 2.5; }

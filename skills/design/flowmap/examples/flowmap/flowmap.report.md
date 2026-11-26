@@ -36,9 +36,9 @@ These have no source, so they are drawn dashed. Ask the reader to confirm them, 
 | Box "Pin the reader's question" | SKILL.md:31 |
 | Box "Collect claims and sources" | SKILL.md:33 |
 | Box "The graph file" | SKILL.md:37; references/graph-format.md:3 |
-| Box "Any errors?" | scripts/flowmap.mjs:97; scripts/lib/graph.mjs, validate(); scripts/lib/sources.mjs, checkSources() |
-| Box "Check the flow and rules" | scripts/flowmap.mjs:101 |
-| Box "Mermaid text" | scripts/flowmap.mjs:103 |
+| Box "Any errors?" | scripts/flowmap.mjs:99; scripts/lib/graph.mjs, validate(); scripts/lib/sources.mjs, checkSources() |
+| Box "Check the flow and rules" | scripts/flowmap.mjs:103 |
+| Box "Mermaid text" | scripts/flowmap.mjs:105 |
 | Box "Pele draws the SVG" | scripts/lib/render.mjs:1 |
 | Box "Report: warnings, claims to confirm" | scripts/flowmap.mjs, buildReport() |
 | Box "Look at the image" | SKILL.md:56 |
@@ -48,10 +48,10 @@ These have no source, so they are drawn dashed. Ask the reader to confirm them, 
 | Arrow "Collect claims and sources" → "The graph file" (writes) | SKILL.md:37 |
 | Arrow "Any errors?" → "The graph file" (yes: fix them) | SKILL.md:48 |
 | Arrow "The graph file" → "Any errors?" (runs the command) | SKILL.md:48 |
-| Arrow "Any errors?" → "Check the flow and rules" (no) | scripts/flowmap.mjs:101 |
+| Arrow "Any errors?" → "Check the flow and rules" (no) | scripts/flowmap.mjs:103 |
 | Arrow "Check the flow and rules" → "Mermaid text" (marks broken paths red) | scripts/lib/graph.mjs:287-288 |
-| Arrow "Mermaid text" → "Pele draws the SVG" (renders) | scripts/flowmap.mjs:111 |
-| Arrow "Pele draws the SVG" → "Report: warnings, claims to confirm" (counts boxes and arrows) | scripts/flowmap.mjs:158 |
+| Arrow "Mermaid text" → "Pele draws the SVG" (renders) | scripts/flowmap.mjs:113 |
+| Arrow "Pele draws the SVG" → "Report: warnings, claims to confirm" (counts boxes and arrows) | scripts/flowmap.mjs:160 |
 | Arrow "Report: warnings, claims to confirm" → "Look at the image" (renders a PNG) | SKILL.md:56 |
 | Arrow "Look at the image" → "The graph file" (reads badly: change it) | SKILL.md:56 |
 | Arrow "Look at the image" → "You confirm the dashed claims" (hands off) | SKILL.md:60 |

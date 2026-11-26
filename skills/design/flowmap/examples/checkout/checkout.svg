@@ -5,7 +5,8 @@
 
    The look: soft colored cards for groups, one dark main path, and clear signals.
    - A box with no source has the class `assumed`: a hollow amber dashed card.
-   - An arrow with no source is dashed (Pele sets stroke-dasharray): amber.
+   - An arrow with no source is dashed (Pele sets stroke-dasharray) in the line color, so only a path
+     that may break a rule is orange.
    - A broken rule marks the failing box with `breaks` (red) or `mayBreak` (orange, when the path uses a guess),
      leading boxes on the path with `bugPath` (blue border), and path arrows with a red or orange linkStyle.
    The main path is a `thick` arrow (Pele sets stroke-width="2.5"): dark ink. */
@@ -53,8 +54,8 @@
 .pele .pele-edge:not([style]) path:not(.pele-marker) { stroke-width: 1.5px; }
 .pele .pele-edge:not([style]) path[stroke-width="2.5"]:not(.pele-marker) { stroke: var(--fm-ink); stroke-width: 3px; }
 .pele .pele-edge:not([style]):has(path[stroke-width="2.5"]) .pele-marker { fill: var(--fm-ink); }
-.pele .pele-edge:not([style]) path[stroke-dasharray]:not(.pele-marker) { stroke: var(--fm-guess); stroke-width: 2px; }
-.pele .pele-edge:not([style]):has(path[stroke-dasharray]) .pele-marker { fill: var(--fm-guess); }
+.pele .pele-edge:not([style]) path[stroke-dasharray]:not(.pele-marker) { stroke: var(--pele-line); stroke-width: 2px; }
+.pele .pele-edge:not([style]):has(path[stroke-dasharray]) .pele-marker { fill: var(--pele-line); }
 .pele .pele-edge[style] path:not(.pele-marker) { filter: drop-shadow(0 0 4px rgb(229 72 77 / 0.5)); }
 .pele .pele-edge[style*="#e8730c"] path:not(.pele-marker) { filter: drop-shadow(0 0 4px rgb(232 115 12 / 0.45)); }
 .pele .pele-edge-label rect { fill: #ffffff; stroke: #e2e2dc; rx: 10px; }

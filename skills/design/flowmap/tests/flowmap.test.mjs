@@ -218,6 +218,12 @@ describe('render', () => {
     assert.equal(withStyle('<svg>x</svg>', ''), '<svg>x</svg>');
   });
 
+  test('an arrow with no source is dashed in the line color, so only a broken path is orange', () => {
+    const css = readFileSync(join(root, 'assets', 'theme.css'), 'utf8');
+    assert.match(css, /\.pele-edge:not\(\[style\]\) path\[stroke-dasharray\]:not\(\.pele-marker\) \{ stroke: var\(--pele-line\)/);
+    assert.match(css, /\.pele-edge:not\(\[style\]\):has\(path\[stroke-dasharray\]\) \.pele-marker \{ fill: var\(--pele-line\)/);
+  });
+
   test('bad Mermaid throws a PeleError with a line', () => {
     assert.throws(() => renderMermaid('flowchart LR\n  a --> \n  b[oops'), (e) => e instanceof PeleError && e.code === 'syntax' && e.line === 3);
   });
@@ -364,6 +370,16 @@ describe('command', () => {
     const confirmedPage = readFileSync(join(out2, 'confirmed.html'), 'utf8');
     assert.match(confirmedPage, /<span class="pill bad">1 broken<\/span>/);
     assert.match(confirmedPage, /<span class="badge bad">1<\/span>/);
+  });
+
+  test('a label with a line break stays on one line in the report, so its bullets hold together', () => {
+    const g = small();
+    g.nodes[2].label = 'Line one\nLine two';
+    g.rules = [{ says: 'Never line two', never: 'three' }];
+    const r = run(write('multiline.json', g), '--out', join(scratch, 'multiline'));
+    assert.equal(r.status, 0, r.stderr);
+    assert.match(r.stdout, /"Line one Line two"/);
+    assert.doesNotMatch(r.stdout, /Line one\n/);
   });
 
   test('invalid JSON exits 1', () => {
@@ -760,6 +776,16 @@ describe('rules that say nothing', () => {
       assert.equal(breaks.nodes.size, 0);
       assert.ok(warnings.some((w) => w.startsWith('Rule cannot be checked')));
     }
+  });
+
+  test('a through rule whose box and through box are the same cannot be checked, since every path passes it', () => {
+    const g = graph([['start', 'stadium'], ['check'], ['receipt', 'stadium']], [['start', 'check'], ['check', 'receipt']],
+      [{ says: 'Receipt only after receipt', to: 'receipt', through: 'receipt' }]);
+    const { rules, warnings } = checkFlow(g);
+    assert.equal(rules[0].ok, false);
+    assert.equal(rules[0].vacuous, true);
+    assert.match(rules[0].detail, /the same box/);
+    assert.ok(warnings.some((w) => w.startsWith('Rule cannot be checked')));
   });
 
   test('a graph with no arrows still checks its rules and decisions', () => {

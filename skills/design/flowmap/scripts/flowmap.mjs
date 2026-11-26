@@ -14,6 +14,8 @@ import { PeleError, defaultCss, describeError, peleVersion, renderMermaid, svgTo
 const MAX_RATIO = 4;
 
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+// A label may hold a line break; in a report bullet it would end the bullet, so it becomes a space.
+const oneLine = (text) => String(text).replace(/\s*\r?\n\s*/g, ' ');
 
 const USAGE = `Usage: flowmap.mjs INPUT [options]
 
@@ -95,7 +97,7 @@ async function main(argv) {
       checked.errors.push(...sourceCheck.errors);
     }
     if (checked.errors.length) {
-      console.error(`The graph has ${checked.errors.length} error(s):\n${checked.errors.map((e) => `  - ${e}`).join('\n')}`);
+      console.error(`The graph has ${checked.errors.length} error(s):\n${checked.errors.map((e) => `  - ${oneLine(e)}`).join('\n')}`);
       return 1;
     }
     flow = checkFlow(graph);
@@ -160,13 +162,13 @@ function buildReport({ name, graph, result, warnings, files, flow, sourceCheck, 
   lines.push(`Rendered with Pele ${peleVersion()}: ${counts.join(', ')}. ${result.width} × ${result.height} px.`, '');
 
   lines.push('## Warnings', '');
-  lines.push(...(warnings.length ? warnings.map((w) => `- ${w}`) : ['None.']), '');
+  lines.push(...(warnings.length ? warnings.map((w) => `- ${oneLine(w)}`) : ['None.']), '');
 
   if (flow?.rules.length) {
     lines.push('## Rules', '');
     for (const r of flow.rules) {
       const tag = r.ok ? '✓' : r.vacuous ? '? **Cannot check:**' : r.uncertain ? '✗ **May break:**' : '✗ **Broken:**';
-      lines.push(`- ${tag} ${r.says}. ${r.detail}`);
+      lines.push(`- ${tag} ${oneLine(r.says)}. ${oneLine(r.detail)}`);
     }
     lines.push('');
   }
@@ -174,7 +176,7 @@ function buildReport({ name, graph, result, warnings, files, flow, sourceCheck, 
   if (graph) {
     const out = leftOut(graph);
     lines.push('## Leaves out', '');
-    lines.push(...(out.length ? out.map((t) => `- ${t}`) : ['The graph does not say. Add `leavesOut`.']), '');
+    lines.push(...(out.length ? out.map((t) => `- ${oneLine(t)}`) : ['The graph does not say. Add `leavesOut`.']), '');
   }
 
   if (sourceCheck) {
@@ -204,7 +206,7 @@ function buildReport({ name, graph, result, warnings, files, flow, sourceCheck, 
     lines.push(todo.length
       ? 'These have no source, so they are drawn dashed. Ask the reader to confirm them, or find a source.'
       : 'Every box and arrow has a source.', '');
-    lines.push(...todo.map((t) => `- ${t}`));
+    lines.push(...todo.map((t) => `- ${oneLine(t)}`));
     if (todo.length) lines.push('');
 
     const label = new Map(graph.nodes.map((n) => [n.id, n.label]));

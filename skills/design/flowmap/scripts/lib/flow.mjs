@@ -135,6 +135,10 @@ export function checkFlow(graph) {
     const fromText = rule.from ? `"${label.get(rule.from)}"` : 'the start';
     let path = null;
     let detail;
+    if (rule.through !== undefined && rule.through === rule.to) {
+      detail = `\`to\` and \`through\` are the same box ("${label.get(rule.to)}"), so every path to it passes it and the rule says nothing. Name the box the path must pass on the way.`;
+      return { says: rule.says, ok: false, vacuous: true, detail };
+    }
     if (rule.through !== undefined) {
       // A rule about a box nothing leads to holds for no path, so it says nothing. A start box is
       // where the flow begins, not a box it reaches, unless the rule starts there itself.
