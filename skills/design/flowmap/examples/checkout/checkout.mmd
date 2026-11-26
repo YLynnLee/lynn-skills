@@ -1,0 +1,28 @@
+---
+title: "How an order gets from Pay to a receipt"
+---
+flowchart TD
+  n_cart(["You press Pay"])
+  subgraph g_pay["Payment"]
+    n_pay["Charge the card"]
+    n_retry["Retry queue"]
+    n_check{"Card accepted?"}
+    n_declined(["Card declined page"])
+  end
+  subgraph g_after["After payment"]
+    n_orders[("Orders")]
+    n_receipt(["Receipt email"])
+  end
+  n_cart ==>|"sends the order"| n_pay
+  n_pay ==>|"card network answers"| n_check
+  n_pay -->|"network timeout"| n_retry
+  n_check ==>|"yes"| n_orders
+  n_check -->|"no"| n_declined
+  n_retry -->|"saves it as pending"| n_orders
+  n_retry -.->|"charges again later"| n_pay
+  n_orders ==>|"sends the receipt"| n_receipt
+  classDef bugPath stroke:#1680f3,stroke-width:2.5px
+  classDef breaks fill:#ffecee,stroke:#e5484d,stroke-width:3px,color:#cd2834
+  class n_cart,n_pay,n_retry,n_orders bugPath
+  class n_receipt breaks
+  linkStyle 0,2,5,7 stroke:#e5484d,stroke-width:3px

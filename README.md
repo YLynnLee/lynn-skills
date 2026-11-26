@@ -99,11 +99,12 @@ Skills split on one axis: who can start them. **User-invoked** skills run only w
 
 ### Design
 
-Design and front-end style work. [Bucket README](./skills/design/README.md)
+Design and front-end style work, and diagrams of how things work. [Bucket README](./skills/design/README.md)
 
 **Model-invoked**
 
 - **[reference-to-style](./skills/design/reference-to-style/SKILL.md)**: Turn design references (screenshots, live sites, Figma frames, moodboards) into a measured style, shown on a visual board and backed by a written guide, then applies it to your site when you ask. [Docs](./docs/design/reference-to-style.md)
+- **[flowmap](./skills/design/flowmap/SKILL.md)**: Map how a codebase, system, process or decision flows, as a diagram where every box and arrow is traced to its source (a file and line, a URL, a doc section), guesses are drawn dashed for you to confirm, and a path that breaks a rule you set is drawn red. [Docs](./docs/design/flowmap.md)
 
 ### Productivity
 

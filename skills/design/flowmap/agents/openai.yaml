@@ -1,0 +1,3 @@
+interface:
+  display_name: "Flowmap"
+  short_description: "Map how a system or process flows, with every box traced to its source"

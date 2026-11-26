@@ -9,14 +9,17 @@
     {
       "name": "lynn-skills",
       "source": "./",
-      "description": "Agent skills by YLynnLee: design references to measured styles, and more.",
+      "description": "Agent skills by YLynnLee: design references to measured styles, sourced flow maps, and more.",
       "category": "design",
       "keywords": [
         "skills",
         "design",
         "style-guide",
         "design-tokens",
-        "references"
+        "references",
+        "diagram",
+        "flowchart",
+        "mermaid"
       ]
     }
   ]

@@ -1,0 +1,41 @@
+{
+  "title": "How an order gets from Pay to a receipt",
+  "direction": "TD",
+  "root": ".",
+  "leavesOut": [
+    "Refunds and cancellations, which start from another page",
+    "What the card network does inside authorize()",
+    "The database and the mailer, which only store and send"
+  ],
+  "rules": [
+    { "says": "No receipt goes out unless the card is accepted", "to": "receipt", "through": "check" }
+  ],
+  "groups": {
+    "pay": { "label": "Payment" },
+    "after": { "label": "After payment" }
+  },
+  "nodes": [
+    { "id": "cart", "label": "You press Pay", "shape": "stadium", "source": "shop/cart.js:4" },
+    { "id": "pay", "label": "Charge the card", "group": "pay", "source": "shop/pay.js:7" },
+    { "id": "retry", "label": "Retry queue", "group": "pay", "source": "shop/retry.js:4" },
+    { "id": "check", "label": "Card accepted?", "shape": "decision", "group": "pay", "source": "shop/pay.js:15" },
+    { "id": "orders", "label": "Orders", "shape": "database", "group": "after", "source": "shop/orders.js:6" },
+    { "id": "receipt", "label": "Receipt email", "shape": "stadium", "group": "after", "source": "shop/receipt.js:4-5" },
+    { "id": "declined", "label": "Card declined page", "shape": "stadium", "group": "pay", "source": "shop/pay.js:20" }
+  ],
+  "edges": [
+    { "from": "cart", "to": "pay", "label": "sends the order", "style": "thick", "source": "shop/cart.js:6" },
+    { "from": "pay", "to": "check", "label": "card network answers", "style": "thick", "source": "shop/pay.js:10" },
+    { "from": "pay", "to": "retry", "label": "network timeout", "source": "shop/pay.js:11-13" },
+    { "from": "check", "to": "orders", "label": "yes", "style": "thick", "source": "shop/pay.js:16-17" },
+    { "from": "check", "to": "declined", "label": "no", "source": "shop/pay.js:19-20" },
+    { "from": "retry", "to": "orders", "label": "saves it as pending", "source": "shop/retry.js:5-7" },
+    { "from": "retry", "to": "pay", "label": "charges again later" },
+    { "from": "orders", "to": "receipt", "label": "sends the receipt", "style": "thick", "source": "shop/orders.js:7" }
+  ],
+  "flows": [
+    { "label": "Card accepted", "steps": ["cart", "pay", "check", "orders", "receipt"] },
+    { "label": "Network timeout", "note": "The path that breaks the rule", "steps": ["cart", "pay", "retry", "orders", "receipt"] },
+    { "label": "Card declined", "steps": ["cart", "pay", "check", "declined"] }
+  ]
+}

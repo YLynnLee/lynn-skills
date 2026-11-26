@@ -1,0 +1,27 @@
+name: flowmap
+
+on:
+  push:
+    paths: ["skills/design/flowmap/**", ".github/workflows/flowmap.yml"]
+  pull_request:
+    paths: ["skills/design/flowmap/**", ".github/workflows/flowmap.yml"]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: ["18", "22"]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: skills/design/flowmap
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: node scripts/doctor.mjs
+      - run: npm test

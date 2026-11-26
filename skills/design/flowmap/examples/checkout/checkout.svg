@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="pele pele-flowchart" viewBox="0 0 534 962" width="534" height="962" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_tw:var(--pele-title-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="flowchart"><style>/* flowmap theme for Pele. Pele ignores Mermaid's theme and themeVariables;
+   it reads these --pele-* variables instead (https://pele.run/theming).
+   The command puts this file in a style element at the start of each SVG,
+   so the SVG follows the viewer's light or dark setting.
+
+   The look: soft colored cards for groups, one dark main path, and clear signals.
+   - A box with no source has the class `assumed`: a hollow amber dashed card.
+   - An arrow with no source is dashed (Pele sets stroke-dasharray): amber.
+   - A broken rule marks the failing box with `breaks` (red) or `mayBreak` (orange, when the path uses a guess),
+     leading boxes on the path with `bugPath` (blue border), and path arrows with a red or orange linkStyle.
+   The main path is a `thick` arrow (Pele sets stroke-width="2.5"): dark ink. */
+.pele {
+  --pele-bg: #f6f6f3;
+  --pele-fg: #141414;
+  --pele-muted: #5f5f5a;
+  --pele-line: #8b8b85;
+  --pele-surface: #ffffff;
+  --pele-surface-alt: #ffffff;
+  --pele-border: #d2d2cc;
+  --pele-accent: #2f6fed;
+  --pele-radius: 12px;
+  --fm-ink: #141414;
+  --fm-guess: #b45309;
+  --fm-guess-bg: #ffffff;
+  --fm-guess-text: #92400e;
+  --fm-break: #e5484d;
+  --fm-break-bg: #ffecee;
+  --fm-break-text: #cd2834;
+  --fm-maybe: #e8730c;
+  --fm-maybe-bg: #fff3e6;
+  --fm-maybe-text: #b85a06;
+  --fm-path: #1680f3;
+}
+.pele .pele-label { font-weight: 600; }
+.pele .pele-node > :first-child { stroke-width: 1px; filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / 0.10)) drop-shadow(0 3px 8px rgb(0 0 0 / 0.06)); }
+.pele .pele-node.blue > :first-child { fill: #dce8ff; stroke: #b3cbf7; }
+.pele .pele-node.teal > :first-child { fill: #d3f0ea; stroke: #a5d9ce; }
+.pele .pele-node.green > :first-child { fill: #dcf1d3; stroke: #b4dca4; }
+.pele .pele-node.yellow > :first-child { fill: #fbedc7; stroke: #ecd38f; }
+.pele .pele-node.orange > :first-child { fill: #fde2cf; stroke: #f2c29f; }
+.pele .pele-node.pink > :first-child { fill: #fbdcec; stroke: #efb3d2; }
+.pele .pele-node.purple > :first-child { fill: #e7defd; stroke: #cbbbf4; }
+.pele .pele-node.gray > :first-child { fill: #ebebe7; stroke: #d2d2cc; }
+/* Kept after the colors so they show over them; !important overrides Pele's inline classDef styles in dark mode. */
+.pele .pele-node.assumed > :first-child { fill: var(--fm-guess-bg) !important; fill-opacity: 0.6; stroke: var(--fm-guess) !important; stroke-dasharray: 6 4 !important; stroke-width: 2px !important; filter: none; }
+.pele .pele-node.assumed .pele-label { fill: var(--fm-guess-text) !important; font-style: italic; font-weight: 500; }
+.pele .pele-node.bugPath > :first-child { stroke: var(--fm-path) !important; stroke-width: 2.5px !important; }
+.pele .pele-node.mayBreak > :first-child { fill: var(--fm-maybe-bg) !important; stroke: var(--fm-maybe) !important; stroke-width: 3px !important; filter: drop-shadow(0 0 6px rgb(232 115 12 / 0.4)); }
+.pele .pele-node.mayBreak .pele-label { fill: var(--fm-maybe-text) !important; }
+.pele .pele-node.breaks > :first-child { fill: var(--fm-break-bg) !important; stroke: var(--fm-break) !important; stroke-width: 3px !important; filter: drop-shadow(0 0 6px rgb(229 72 77 / 0.45)); }
+.pele .pele-node.breaks .pele-label { fill: var(--fm-break-text) !important; }
+/* Arrows. One with a style attribute is on a broken path (linkStyle), so it keeps its color. */
+.pele .pele-edge:not([style]) path:not(.pele-marker) { stroke-width: 1.5px; }
+.pele .pele-edge:not([style]) path[stroke-width="2.5"]:not(.pele-marker) { stroke: var(--fm-ink); stroke-width: 3px; }
+.pele .pele-edge:not([style]):has(path[stroke-width="2.5"]) .pele-marker { fill: var(--fm-ink); }
+.pele .pele-edge:not([style]) path[stroke-dasharray]:not(.pele-marker) { stroke: var(--fm-guess); stroke-width: 2px; }
+.pele .pele-edge:not([style]):has(path[stroke-dasharray]) .pele-marker { fill: var(--fm-guess); }
+.pele .pele-edge[style] path:not(.pele-marker) { filter: drop-shadow(0 0 4px rgb(229 72 77 / 0.5)); }
+.pele .pele-edge[style*="#e8730c"] path:not(.pele-marker) { filter: drop-shadow(0 0 4px rgb(232 115 12 / 0.45)); }
+.pele .pele-edge-label rect { fill: #ffffff; stroke: #e2e2dc; rx: 10px; }
+.pele .pele-edge-label text { fill: #45453f; font-size: 12.5px; font-weight: 500; }
+.pele .pele-cluster rect { fill: #ffffff; fill-opacity: 0.55; stroke: #d9d9d3; stroke-width: 1px; }
+.pele .pele-cluster-label { font-size: 13px; font-weight: 700; fill: #3a3a35; }
+
+@media (prefers-color-scheme: dark) {
+  .pele {
+    --pele-bg: #121212;
+    --pele-fg: #f2f2ee;
+    --pele-muted: #a3a39c;
+    --pele-line: #77776f;
+    --pele-surface: #1e1e1c;
+    --pele-surface-alt: #1a1a18;
+    --pele-border: #3a3a35;
+    --pele-accent: #6b9bff;
+    --fm-ink: #f2f2ee;
+    --fm-guess: #f0a43a;
+    --fm-guess-bg: #121212;
+    --fm-guess-text: #f6c27a;
+    --fm-break: #ff6b70;
+    --fm-break-bg: #2e2021;
+    --fm-break-text: #ff8a8e;
+    --fm-maybe: #f08c2e;
+    --fm-maybe-bg: #2e2619;
+    --fm-maybe-text: #ffb067;
+    --fm-path: #4b9aff;
+  }
+  .pele .pele-node > :first-child { filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.5)); }
+  .pele .pele-node.blue > :first-child { fill: #1f3157; stroke: #34508a; }
+  .pele .pele-node.teal > :first-child { fill: #173b36; stroke: #2a6359; }
+  .pele .pele-node.green > :first-child { fill: #1d3a1a; stroke: #33622c; }
+  .pele .pele-node.yellow > :first-child { fill: #3d3215; stroke: #6a5826; }
+  .pele .pele-node.orange > :first-child { fill: #43281a; stroke: #73472d; }
+  .pele .pele-node.pink > :first-child { fill: #3e1e30; stroke: #6c3655; }
+  .pele .pele-node.purple > :first-child { fill: #2d2350; stroke: #4c3d83; }
+  .pele .pele-node.gray > :first-child { fill: #2a2a27; stroke: #45453f; }
+  .pele .pele-edge-label rect { fill: #1e1e1c; stroke: #34342f; }
+  .pele .pele-edge-label text { fill: #d6d6cf; }
+  .pele .pele-cluster rect { fill: #1a1a18; stroke: #34342f; }
+  .pele .pele-cluster-label { fill: #d6d6cf; }
+}
+</style><text class="pele-title" font-weight="var(--_tw)" text-anchor="middle" xml:space="preserve"><tspan x="267" y="25.6">How an order gets from Pay to a receipt</tspan></text><g class="pele-clusters"><g class="pele-cluster" data-id="g_after"><rect x="220.07" y="692.59" width="188.91" height="261.13" fill="var(--_a)" fill-opacity="0.5" stroke="var(--_b)" style="rx:var(--_r)"/></g><g class="pele-cluster" data-id="g_pay"><rect x="8" y="165" width="517.56" height="454.59" fill="var(--_a)" fill-opacity="0.5" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-cluster-label" fill="var(--_m)" x="53.57" y="190.6" text-anchor="middle">Payment</text></g></g><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge" data-id="L_n_cart_n_pay_0" style="stroke:#e5484d;stroke-width:3px;"><path d="M220.34,92L220.34,218" stroke-width="2.5"/><path class="pele-marker" d="M220.34,225L216.98,217L223.7,217Z" fill="#e5484d" stroke="none"/></g><g class="pele-edge" data-id="L_n_pay_n_check_0"><path d="M243.7,273L243.7,283.5C243.7,287.74 415.49,292.76 415.49,297L415.49,339" stroke-width="2.5"/><path class="pele-marker" d="M415.49,346L412.13,338L418.85,338Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_pay_n_retry_0" style="stroke:#e5484d;stroke-width:3px;"><path d="M196.98,273L196.98,283.5C196.98,289.92 83.41,290.58 83.41,297L83.41,322C83.41,343.65 144.27,343.65 144.27,365.3L144.27,371.3"/><path class="pele-marker" d="M144.27,378.3L140.91,370.3L147.63,370.3Z" fill="#e5484d" stroke="none"/></g><g class="pele-edge" data-id="L_n_check_n_orders_0"><path d="M429.53,449.81C429.53,490.7 475.19,490.7 475.19,531.59L475.19,619.59C475.19,629.84 322.52,629.84 322.52,640.09L322.52,745.7" stroke-width="2.5"/><path class="pele-marker" d="M322.52,752.7L319.16,744.7L325.88,744.7Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_check_n_declined_0"><path d="M401.44,449.81C401.44,464.45 351.83,464.45 351.83,479.09L351.83,524.59"/><path class="pele-marker" d="M351.83,531.59L348.47,523.59L355.19,523.59Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_retry_n_orders_0" style="stroke:#e5484d;stroke-width:3px;"><path d="M153.85,426.3L153.85,665.09C153.85,678.84 306.52,678.84 306.52,692.59L306.52,745.7"/><path class="pele-marker" d="M306.52,752.7L303.16,744.7L309.88,744.7Z" fill="#e5484d" stroke="none"/></g><g class="pele-edge" data-id="L_n_retry_n_pay_0"><path d="M163.43,378.3L163.43,365.3C163.43,343.65 220.34,343.65 220.34,322L220.34,280" stroke-dasharray="3 4"/><path class="pele-marker" d="M220.34,273L223.7,281L216.98,281Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_orders_n_receipt_0" style="stroke:#e5484d;stroke-width:3px;"><path d="M314.52,812.72L314.52,878.72" stroke-width="2.5"/><path class="pele-marker" d="M314.52,885.72L311.16,877.72L317.88,877.72Z" fill="#e5484d" stroke="none"/></g></g><g class="pele-cluster-titles"><g class="pele-cluster-title" data-id="g_after"><text fill="none" stroke="color-mix(in srgb,var(--_a) 50%,var(--_bg))" stroke-width="5" stroke-linejoin="round" x="283.87" y="718.19" text-anchor="middle">After payment</text><text class="pele-cluster-label" fill="var(--_m)" x="283.87" y="718.19" text-anchor="middle">After payment</text></g></g><g class="pele-edge-labels" font-size="14"><g class="pele-edge-label" data-id="L_n_cart_n_pay_0"><rect x="167.7" y="114.5" width="105.27" height="21" rx="3" fill="var(--_bg)"/><text x="220.34" y="129.9" text-anchor="middle">sends the order</text></g><g class="pele-edge-label" data-id="L_n_pay_n_check_0"><rect x="343.41" y="299" width="144.15" height="21" rx="3" fill="var(--_bg)"/><text x="415.49" y="314.4" text-anchor="middle">card network answers</text></g><g class="pele-edge-label" data-id="L_n_pay_n_retry_0"><rect x="30" y="299" width="106.81" height="21" rx="3" fill="var(--_bg)"/><text x="83.41" y="314.4" text-anchor="middle">network timeout</text></g><g class="pele-edge-label" data-id="L_n_check_n_orders_0"><rect x="307.63" y="642.09" width="29.78" height="21" rx="3" fill="var(--_bg)"/><text x="322.52" y="657.49" text-anchor="middle">yes</text></g><g class="pele-edge-label" data-id="L_n_check_n_declined_0"><rect x="340.04" y="481.09" width="23.57" height="21" rx="3" fill="var(--_bg)"/><text x="351.83" y="496.49" text-anchor="middle">no</text></g><g class="pele-edge-label" data-id="L_n_retry_n_orders_0"><rect x="89.93" y="642.09" width="127.84" height="21" rx="3" fill="var(--_bg)"/><text x="153.85" y="657.49" text-anchor="middle">saves it as pending</text></g><g class="pele-edge-label" data-id="L_n_retry_n_pay_0"><rect x="156.81" y="299" width="127.06" height="21" rx="3" fill="var(--_bg)"/><text x="220.34" y="314.4" text-anchor="middle">charges again later</text></g><g class="pele-edge-label" data-id="L_n_orders_n_receipt_0"><rect x="257.22" y="835.22" width="114.61" height="21" rx="3" fill="var(--_bg)"/><text x="314.52" y="850.62" text-anchor="middle">sends the receipt</text></g></g><g class="pele-nodes"><g class="pele-node pele-shape-stadium bugPath" data-id="n_cart" transform="translate(220.34,68)"><rect x="-78.02" y="-24" width="156.05" height="48" rx="24" fill="var(--_s)" stroke="var(--_b)" style="stroke:#1680f3;stroke-width:2.5px;"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">You press Pay</text></g><g class="pele-node pele-shape-rect bugPath" data-id="n_pay" transform="translate(220.34,249)"><rect x="-75.36" y="-24" width="150.72" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r);stroke:#1680f3;stroke-width:2.5px;"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Charge the card</text></g><g class="pele-node pele-shape-rect bugPath" data-id="n_retry" transform="translate(153.85,402.3)"><rect x="-61.58" y="-24" width="123.15" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r);stroke:#1680f3;stroke-width:2.5px;"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Retry queue</text></g><g class="pele-node pele-shape-diam" data-id="n_check" transform="translate(415.49,402.3)"><polygon points="0,-56.29 90.07,0 0,56.3 -90.07,0" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Card accepted?</text></g><g class="pele-node pele-shape-stadium" data-id="n_declined" transform="translate(351.83,555.59)"><rect x="-95.37" y="-24" width="190.74" height="48" rx="24" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Card declined page</text></g><g class="pele-node pele-shape-cyl bugPath" data-id="n_orders" transform="translate(314.52,782.65)"><path d="M-42.45,-24A42.45,6.06 0 0 1 42.45,-24V24A42.45,6.06 0 0 1 -42.45,24Z" fill="var(--_s)" stroke="var(--_b)" style="stroke:#1680f3;stroke-width:2.5px;"/><path d="M-42.45,-24A42.45,6.06 0 0 0 42.45,-24" fill="none" stroke="var(--_b)" style="stroke:#1680f3;stroke-width:2.5px;"/><text class="pele-label" x="0" y="8.63" text-anchor="middle">Orders</text></g><g class="pele-node pele-shape-stadium breaks" data-id="n_receipt" transform="translate(314.52,909.72)"><rect x="-74.46" y="-24" width="148.91" height="48" rx="24" fill="var(--_s)" stroke="var(--_b)" style="fill:#ffecee;stroke:#e5484d;stroke-width:3px;"/><text class="pele-label" style="fill:#cd2834;" x="0" y="5.6" text-anchor="middle">Receipt email</text></g></g></svg>
