@@ -23,12 +23,14 @@ export function parseSource(text, { isFile } = {}) {
   const s = text.trim();
   if (/^[a-z][a-z0-9+.-]*:\/\//i.test(s)) return { kind: 'url', text: s };
   const tail = '(?::(\\d+)(?:-(\\d+))?)?(?:#([^\\s,]+))?(?:,\\s*(.+))?$';
+  // A Windows path may start with a drive, such as `C:\repo\a.ts:12`. Its colon is not a line number.
+  const drive = '(?:[A-Za-z]:[\\\\/])?';
   // A path with an extension or a slash is a file. A bare word, such as `Makefile`, is a file only when it exists.
-  let m = s.match(new RegExp(`^([^\\s:#,]+\\.[A-Za-z0-9]+|[^\\s:#,]*\\/[^\\s:#,]+)${tail}`));
+  let m = s.match(new RegExp(`^(${drive}(?:[^\\s:#,]+\\.[A-Za-z0-9]+|[^\\s:#,]*\\/[^\\s:#,]+))${tail}`));
   if (!m && isFile) {
     // A path with spaces, such as `docs/My notes.md:3`, or a bare name: a file only when it exists.
     for (const head of ['[^:#,]+\\.[A-Za-z0-9]+', '[^\\s:#,]+']) {
-      m = s.match(new RegExp(`^(${head})${tail}`));
+      m = s.match(new RegExp(`^(${drive}${head})${tail}`));
       if (m && isFile(m[1])) break;
       m = null;
     }

@@ -165,7 +165,7 @@ URLs and notes such as `user said` cannot be checked. The report lists them, so 
 - `-.->` for arrows with no source;
 - `classDef` and `class ... breaks` (or `mayBreak` if a guess is on the path) for the failing box, `bugPath` for leading boxes on the path, and a red or orange `linkStyle` for its arrows.
 
-`NAME.html` is a standalone page. It mounts the Mermaid with Pele, which is inlined, for zoom and pan, so it works offline, at about 750 KB.
+`NAME.html` is a standalone page. It mounts the Mermaid with Pele, which is inlined, for zoom and pan, so it works offline, at about 850 KB.
 - **Size:** the drawing opens at a readable size, never shrunk below 80% of its natural size, so labels stay about 13px. A bigger graph scrolls, starting from its top left, and "Fit whole graph" shrinks it to the canvas's width and height.
 - **Side panel:** each box and arrow maps to its claim, so a click shows its source, or that it has none, and Esc clears it. Clicking a rule or a claim to confirm lights it up and scrolls it into view. The header keeps the title and status chips (rules, claims to confirm) in view. The rules, the claims to confirm, what the graph leaves out, and the legend are sections that fold.
 - **Panel size:** the panel closes (the "Details" button on the canvas brings it back, with a count of broken rules or claims to confirm), widens with its expand button, and resizes by dragging its edge or with the arrow keys. The browser remembers the width and whether it is open. Below 900px wide, the panel sits under the canvas.
@@ -177,4 +177,4 @@ The sources table is only in the report.
 
 `NAME.svg` (with `--all`) carries `assets/theme.css` in a `<style>` element. It follows the viewer's light or dark setting. Pass `--css FILE` to use your own theme, or `--no-theme` to leave the theme out. Pele's variables are listed at https://pele.run/theming.
 
-`NAME.png` (with `--png`) is the SVG at 2x, for looking at the layout. It goes to `flowmap/` in the system's temp folder, or next to the page with `--all`. It is light unless `--dark`, padded with the theme's background. The command uses Playwright when it can load it, from the skill folder or from `~/.cache/flowmap` (`$FLOWMAP_PLAYWRIGHT_DIR`). Otherwise it uses Chrome or Chromium on the computer (`$FLOWMAP_CHROME` to name one). With neither, the report says `No PNG`.
+`NAME.png` (with `--png`) is the SVG at 2x, for looking at the layout. It goes to `flowmap/` in the system's temp folder, or next to the page with `--all`. It is light unless `--dark`, padded with the theme's background. The command uses Playwright when it can load it, from the skill folder or from `~/.cache/flowmap` (`$FLOWMAP_PLAYWRIGHT_DIR`). Otherwise it uses Chrome or Chromium on the computer, or Edge on Windows (`$FLOWMAP_CHROME` to name one). With neither, the report says `No PNG`.

@@ -1,6 +1,6 @@
 # How an order gets from Pay to a receipt
 
-Rendered with Pele 1.13.0: flowchart, 7 boxes, 8 arrows, 2 groups. 534 × 962 px.
+Rendered with Pele 1.13.0: flowchart, 7 boxes, 8 arrows, 1 group. 537 × 882 px.
 
 ## Warnings
 

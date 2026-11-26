@@ -41,19 +41,21 @@ Install the collection for your agent (see [Install](../../README.md#install)), 
 npx skills@latest add YLynnLee/lynn-skills --skill flowmap
 ```
 
-Then, inside the skill folder:
+It works with any agent that can run shell commands, such as Claude Code, Codex, Gemini CLI, Cursor or Copilot. Chat-only assistants that cannot run commands cannot use it.
 
 | What | Needed for | Install |
 |---|---|---|
-| Node 18.3 or later | Everything | https://nodejs.org |
-| `pele` 1.13.0 | Rendering | `npm install` |
-| Chrome or Chromium, or Playwright | Optional: PNG previews the agent uses to check the layout | Chrome is found by itself (`$FLOWMAP_CHROME` names another). Or `npm install --prefix ~/.cache/flowmap playwright && npx --prefix ~/.cache/flowmap playwright install chromium` |
+| Node 20 or later | Everything | https://nodejs.org |
+| Pele 1.13.0 | Rendering | Nothing to do: it ships in the skill's `vendor/pele/` |
+| Chrome, Chromium or Edge, or Playwright | Optional: PNG previews the agent uses to check the layout | Chrome or Chromium is found by itself, and Edge on Windows (`$FLOWMAP_CHROME` names another). Or `npm install --prefix ~/.cache/flowmap playwright && npx --prefix ~/.cache/flowmap playwright install chromium` |
+
+Inside the skill folder:
 
 ```bash
 node scripts/doctor.mjs
 ```
 
-`doctor.mjs` prints `OK` or `MISSING` for each one, with the exact command to fix it. The skill runs it before its first run.
+`doctor.mjs` prints `OK` or `MISSING` for each one, with the fix. The skill runs it before its first run.
 
 To run the command yourself:
 
@@ -71,7 +73,7 @@ It writes `checkout.html` next to the input and prints the report. `--out DIR` w
 
 **What happens when I confirm a dashed claim?** The agent sets its source to "user said", or to the line you point to, and renders again, so the claim is drawn solid.
 
-**It says `No PNG`.** There's no Chrome, Chromium or Playwright to take the picture. The page still works; the agent opens it in a browser if it can, or tells you nobody has looked at the layout.
+**It says `No PNG`.** There's no Chrome, Chromium, Edge (on Windows) or Playwright to take the picture. The page still works; the agent opens it in a browser if it can, or tells you nobody has looked at the layout.
 
 **My graph has 40 arrows.** Above about 20 the command warns. The agent merges boxes that act the same for the reader, or splits the map into an overview and a close-up, and lists what it dropped under "leaves out".
 
@@ -88,11 +90,12 @@ It writes `checkout.html` next to the input and prints the report. `--out DIR` w
 From the skill folder:
 
 ```bash
-npm install
 npm test
 ```
 
-They render through the real Pele. They check the source, flow and rule checks against small graphs, the page and report, and that each example still checks clean and produces its committed `.mmd`; the checkout example must find its planted bug. After you change the generator, run `npm run examples` to refresh the examples. CI runs them on Linux and macOS with Node 18 and 22 whenever the skill changes (`.github/workflows/flowmap.yml`).
+There is nothing to install first. They render through the real Pele. They check the source, flow and rule checks against small graphs, the page and report, and that each example still checks clean and produces its committed `.mmd`; the checkout example must find its planted bug. After you change the generator, run `npm run examples` to refresh the examples. CI runs them on Linux, macOS and Windows with Node 20, 22 and 24 whenever the skill changes (`.github/workflows/flowmap.yml`).
+
+Pele is copied from npm into `vendor/pele/`, so users need no `npm install`. To move to a new Pele version, run `npm run vendor -- 1.14.0`, then the tests and `npm run examples`. `npm run vendor:check` (also in CI) confirms the copy is byte for byte what npm publishes for that version.
 
 ## Credits
 

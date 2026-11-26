@@ -11,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        node: ["18", "22"]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: ["20", "22", "24"]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -22,6 +22,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: npm ci
+      # Nothing to install: Pele ships in vendor/pele/.
       - run: node scripts/doctor.mjs
       - run: npm test
+
+  vendor:
+    # vendor/pele/ must be byte for byte what npm publishes for the version in vendor/pele/VERSION.
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: skills/design/flowmap
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npm run vendor:check

@@ -231,7 +231,7 @@ describe('command', () => {
     assert.ok(existsSync(join(out, 'small.html')));
     for (const f of ['small.mmd', 'small.svg', 'small.report.md', 'small.png']) assert.ok(!existsSync(join(out, f)), f);
     const report = r.stdout;
-    assert.match(report, /3 boxes, 2 arrows, 1 groups/);
+    assert.match(report, /3 boxes, 2 arrows, 1 group\./);
     assert.match(report, /- Box "Guess"/);
     assert.match(report, /\| Box "Second" \| a\.md:3; b\.md \|/);
     assert.match(report, /## Leaves out\n\n- Everything else/);
@@ -303,7 +303,7 @@ describe('command', () => {
     const r = run(write('esc.json', g), '--out', out);
     assert.equal(r.status, 0, r.stderr);
     const html = readFileSync(join(out, 'esc.html'), 'utf8');
-    assert.equal((html.match(/<\/script>/g) ?? []).length, 6, 'only the page\'s own six scripts close');
+    assert.equal((html.match(/<\/script>/g) ?? []).length, 7, 'only the page\'s own seven scripts close');
   });
 
   test('a graph with errors exits 1 and writes nothing', () => {
@@ -459,6 +459,15 @@ describe('sources', () => {
     assert.equal(parseSource('https://pele.run/api').kind, 'url');
     assert.equal(parseSource('user said').kind, 'note');
     assert.equal(parseSource('SKILL.md, step 2').path, 'SKILL.md');
+  });
+
+  test('parseSource reads a Windows drive as part of the path, not as a line number', () => {
+    assert.deepEqual(
+      parseSource('C:\\repo\\src\\a.ts:12'),
+      { kind: 'file', text: 'C:\\repo\\src\\a.ts:12', path: 'C:\\repo\\src\\a.ts', from: 12, to: 12, anchor: undefined, detail: undefined },
+    );
+    assert.equal(parseSource('D:/repo/docs/x.md#install').path, 'D:/repo/docs/x.md');
+    assert.equal(parseSource('D:/repo/docs/x.md#install').anchor, 'install');
   });
 
   test('a good graph passes, and URLs and notes are listed as not checkable', () => {

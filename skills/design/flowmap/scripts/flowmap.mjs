@@ -13,6 +13,8 @@ import { PeleError, defaultCss, describeError, peleVersion, renderMermaid, svgTo
 // A drawing more than this many times as wide as it is tall, or the other way, shows small labels in a picture.
 const MAX_RATIO = 4;
 
+const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
 const USAGE = `Usage: flowmap.mjs INPUT [options]
 
 INPUT is either:
@@ -48,7 +50,6 @@ async function main(argv) {
       options: {
         out: { type: 'string' },
         all: { type: 'boolean' },
-        html: { type: 'boolean' }, // the page is always written; kept so older commands still run
         png: { type: 'boolean' },
         dark: { type: 'boolean' },
         'max-edges': { type: 'string' },
@@ -123,7 +124,7 @@ async function main(argv) {
   }
 
   const files = [];
-  const counts = [`${result.nodes} boxes`, `${result.edges} arrows`];
+  const counts = [plural(result.nodes, 'box', 'boxes'), plural(result.edges, 'arrow', 'arrows')];
   writeFileSync(join(out, `${name}.html`), buildHtml({ title: graph?.title ?? name, mermaid, svg: result.svg, css, graph, counts: counts.join(', '), flow }));
   files.push(join(out, `${name}.html`));
   if (opt.all) {
@@ -154,8 +155,8 @@ async function main(argv) {
 
 function buildReport({ name, graph, result, warnings, files, flow, sourceCheck, root }) {
   const lines = [`# ${graph?.title ?? name}`, ''];
-  const counts = [`${result.type}`, `${result.nodes} boxes`, `${result.edges} arrows`];
-  if (graph) counts.push(`${Object.keys(graph.groups ?? {}).length} groups`);
+  const counts = [`${result.type}`, plural(result.nodes, 'box', 'boxes'), plural(result.edges, 'arrow', 'arrows')];
+  if (graph) counts.push(plural(Object.keys(graph.groups ?? {}).length, 'group', 'groups'));
   lines.push(`Rendered with Pele ${peleVersion()}: ${counts.join(', ')}. ${result.width} × ${result.height} px.`, '');
 
   lines.push('## Warnings', '');
@@ -178,10 +179,12 @@ function buildReport({ name, graph, result, warnings, files, flow, sourceCheck, 
 
   if (sourceCheck) {
     lines.push('## Source checks', '');
-    const shown = relative(dirname(graph.input), root) || '.';
+    // Show `root` the short way: relative to the graph when that is shorter, such as `../..`, else in full,
+    // so a graph in a temp folder does not print a long climb of `../` to the repo.
+    const rel = relative(dirname(graph.input), root) || '.';
+    const shown = rel.length < root.length ? `\`${rel}\` (from the graph's folder)` : `\`${root}\``;
     const { checked, compared, warnings: sourceWarnings } = sourceCheck;
-    const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
-    lines.push(`${plural(checked, 'file source was', 'file sources were')} checked against the files under \`${shown}\` (from the graph's folder). Each file is there, and each cited line is in the file.`);
+    lines.push(`${plural(checked, 'file source was', 'file sources were')} checked against the files under ${shown}. Each file is there, and each cited line is in the file.`);
     if (compared) lines.push(`${plural(compared, 'cited line was compared with the words of its claim', 'cited lines were compared with the words of their claims')}.`);
     lines.push(sourceWarnings.length
       ? `${plural(sourceWarnings.length, 'warning above is', 'warnings above are')} about sources.`

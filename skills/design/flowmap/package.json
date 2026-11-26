@@ -6,11 +6,12 @@
   "license": "MIT",
   "type": "module",
   "bin": { "flowmap": "scripts/flowmap.mjs" },
-  "engines": { "node": ">=18.3" },
+  "engines": { "node": ">=20" },
   "scripts": {
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test",
     "examples": "node scripts/flowmap.mjs examples/flowmap/flowmap.json --all --png && node scripts/flowmap.mjs examples/checkout/checkout.json --all --png",
-    "doctor": "node scripts/doctor.mjs"
-  },
-  "dependencies": { "pele": "1.13.0" }
+    "doctor": "node scripts/doctor.mjs",
+    "vendor": "node scripts/vendor-pele.mjs",
+    "vendor:check": "node scripts/vendor-pele.mjs --check"
+  }
 }

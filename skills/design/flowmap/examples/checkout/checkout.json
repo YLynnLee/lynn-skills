@@ -11,16 +11,15 @@
     { "says": "No receipt goes out unless the card is accepted", "to": "receipt", "through": "check" }
   ],
   "groups": {
-    "pay": { "label": "Payment" },
-    "after": { "label": "After payment" }
+    "pay": { "label": "Payment" }
   },
   "nodes": [
     { "id": "cart", "label": "You press Pay", "shape": "stadium", "source": "shop/cart.js:4" },
     { "id": "pay", "label": "Charge the card", "group": "pay", "source": "shop/pay.js:7" },
     { "id": "retry", "label": "Retry queue", "group": "pay", "source": "shop/retry.js:4" },
     { "id": "check", "label": "Card accepted?", "shape": "decision", "group": "pay", "source": "shop/pay.js:15" },
-    { "id": "orders", "label": "Orders", "shape": "database", "group": "after", "source": "shop/orders.js:6" },
-    { "id": "receipt", "label": "Receipt email", "shape": "stadium", "group": "after", "source": "shop/receipt.js:4-5" },
+    { "id": "orders", "label": "Orders", "shape": "database", "source": "shop/orders.js:6" },
+    { "id": "receipt", "label": "Receipt email", "shape": "stadium", "source": "shop/receipt.js:4-5" },
     { "id": "declined", "label": "Card declined page", "shape": "stadium", "group": "pay", "source": "shop/pay.js:20" }
   ],
   "edges": [

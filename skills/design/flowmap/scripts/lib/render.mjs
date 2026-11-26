@@ -5,14 +5,13 @@ import { createRequire } from 'node:module';
 import { homedir, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { render, PeleError } from 'pele';
-
-const require = createRequire(import.meta.url);
+// Pele ships with the skill in vendor/pele/ (copied from npm by scripts/vendor-pele.mjs), so nothing is installed.
+import { render, PeleError } from '../../vendor/pele/pele.mjs';
 
 // Pele's defaults are sized for small diagrams. These match the statechart skill's render settings.
 export const LIMITS = { limit: 1_000_000, outputLimit: 8_000_000, maxEdges: 10_000 };
 
-export const peleVersion = () => require('pele/package.json').version;
+export const peleVersion = () => readFileSync(new URL('../../vendor/pele/VERSION', import.meta.url), 'utf8').trim();
 
 export const defaultCss = () => readFileSync(new URL('../../assets/theme.css', import.meta.url), 'utf8');
 
@@ -71,18 +70,34 @@ export function loadPlaywright() {
   return null;
 }
 
-/** Chrome or Chromium on this computer: $FLOWMAP_CHROME, then the usual places. */
+/**
+ * Chrome or Chromium on this computer: $FLOWMAP_CHROME, then the usual places. On Windows, Edge counts
+ * too: it is Chromium, takes the same flags, and comes with every copy of Windows 10 and 11.
+ */
 export function findChrome() {
+  const windows = process.platform === 'win32';
+  const env = process.env;
+  const winRoots = [env.PROGRAMFILES, env['PROGRAMFILES(X86)'], env.LOCALAPPDATA].filter(Boolean);
   const candidates = [
-    process.env.FLOWMAP_CHROME,
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/Applications/Chromium.app/Contents/MacOS/Chromium',
-    join(homedir(), 'Applications/Google Chrome.app/Contents/MacOS/Google Chrome'),
+    env.FLOWMAP_CHROME,
+    ...(windows
+      ? [
+        ...winRoots.map((root) => join(root, 'Google', 'Chrome', 'Application', 'chrome.exe')),
+        ...winRoots.map((root) => join(root, 'Chromium', 'Application', 'chrome.exe')),
+        ...winRoots.map((root) => join(root, 'Microsoft', 'Edge', 'Application', 'msedge.exe')),
+      ]
+      : [
+        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        '/Applications/Chromium.app/Contents/MacOS/Chromium',
+        join(homedir(), 'Applications/Google Chrome.app/Contents/MacOS/Google Chrome'),
+      ]),
   ].filter(Boolean);
   for (const path of candidates) if (existsSync(path)) return path;
-  for (const name of ['google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser']) {
-    const r = spawnSync('which', [name], { encoding: 'utf8' });
-    if (r.status === 0 && r.stdout.trim()) return r.stdout.trim();
+  const names = windows ? ['chrome', 'msedge'] : ['google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser'];
+  for (const name of names) {
+    const r = spawnSync(windows ? 'where' : 'which', [name], { encoding: 'utf8' });
+    const found = r.status === 0 ? r.stdout.split(/\r?\n/)[0].trim() : '';
+    if (found) return found;
   }
   return null;
 }

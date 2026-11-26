@@ -2,7 +2,7 @@
 name: flowmap
 description: "Map how a codebase, system, process, decision or document flows or connects, as a diagram where every box and arrow is traced to its source (a file and line, a URL, a doc section or the user's word) and guesses are drawn dashed for the reader to confirm. It checks promises such as \"nothing ships without review\" against every path and draws a path that breaks one in red. The output is an HTML page that shows the source of whatever the reader clicks, and Mermaid on request. Use for /flowmap, or when the user asks to map, graph, diagram, draw or visualize how something works, connects or flows: an architecture, a request or data flow, a pipeline, a user journey, a decision, or how services, modules or skills hand off to each other; or wants a flow checked for gaps or bugs. Not for charts of numbers or for designing UI."
 license: MIT
-compatibility: "Needs Node 18.3 or later and the pinned pele npm package; scripts/doctor.mjs prints the install command. Chrome, Chromium or Playwright are optional, for PNG previews of the layout."
+compatibility: "Needs an agent that can run shell commands, and Node 20 or later. The Pele renderer ships in vendor/pele/, so nothing else is installed. Chrome, Chromium, Edge or Playwright are optional, for PNG previews of the layout."
 ---
 
 # Flowmap
@@ -11,7 +11,7 @@ A flowmap answers one question for one reader. Each box and each arrow is a clai
 
 ## Run
 
-Before the first run, run `node <this skill>/scripts/doctor.mjs`. It prints `OK` or `MISSING` for Node and `pele`, with the exact command for anything missing. To install the pinned `pele`, run the `npm install` command it prints; it installs into this skill's folder only. Its note about PNG previews is optional.
+Before the first run, run `node <this skill>/scripts/doctor.mjs`. It prints `OK` or `MISSING` for Node and the skill's own files, with the fix for anything missing. Pele, the renderer, ships with the skill, so there is nothing to install but Node. Its note about PNG previews is optional.
 
 Work in the session's scratch folder if the host gives one, else in a temporary folder outside the repo, unless the user wants the files in the repo. Write a graph file, then run:
 
@@ -54,7 +54,7 @@ The command checks three things:
    The step is done when the report has no errors and each warning is fixed or explained.
 
 6. **Look at it.** Run with `--png` and read the PNG at the path the command prints. Look for arrows that cross for no reason, labels that collide, a reading order that jumps back and forth, and a drawing much wider or taller than a screen (the report warns). Change the direction, the order of the nodes, or the grouping, then render again. Pele lays boxes out in the order `nodes` lists them, and draws each group whole where its first box is listed. The step is done when no reorder would remove a crossing and no labels collide, or after three renders, when you say in the hand-off what still reads badly.
-   - The command makes the PNG with Playwright if it is installed, else with Chrome or Chromium on the computer. When it prints `No PNG`, open the HTML page with a browser tool if you have one.
+   - The command makes the PNG with Playwright if it is installed, else with Chrome or Chromium on the computer (or Edge, on Windows). When it prints `No PNG`, open the HTML page with a browser tool if you have one.
    - With no browser tool, ask the user before installing Playwright, since it downloads a browser: `npm install --prefix ~/.cache/flowmap playwright && npx --prefix ~/.cache/flowmap playwright install chromium`. If they decline, say in the hand-off that nobody has looked at the layout.
 
 7. **Hand off.** Findings first, then files. Leave out any item below that is empty.
