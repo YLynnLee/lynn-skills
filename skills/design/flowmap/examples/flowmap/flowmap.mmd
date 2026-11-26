@@ -1,0 +1,36 @@
+---
+title: "How flowmap turns a subject into a graph"
+---
+flowchart TD
+  n_ask(["You ask for a graph"])
+  subgraph g_agent["The agent decides"]
+    n_question["Pin the reader's question"]
+    n_claims["Collect claims and sources"]
+    n_graph[("The graph file")]
+  end
+  subgraph g_command["The command checks and renders"]
+    n_check{"Any errors?"}
+    n_flow["Check the flow and rules"]
+    n_mermaid["Mermaid text"]
+    n_pele["Pele draws the SVG"]
+    n_report["Report: warnings, claims to confirm"]
+  end
+  subgraph g_review["The agent looks and hands off"]
+    n_look["Look at the image"]
+  end
+  n_reader(["You confirm the dashed claims"])
+  n_ask --> n_question
+  n_question -->|"reads the real material"| n_claims
+  n_claims -->|"writes"| n_graph
+  n_check -->|"yes: fix them"| n_graph
+  n_graph -->|"runs the command"| n_check
+  n_check -->|"no"| n_flow
+  n_flow -->|"marks broken paths red"| n_mermaid
+  n_mermaid -->|"renders"| n_pele
+  n_pele -->|"counts boxes and arrows"| n_report
+  n_report -->|"renders a PNG"| n_look
+  n_look -->|"reads badly: change it"| n_graph
+  n_look ==>|"hands off"| n_reader
+  n_reader -.->|"a new question"| n_question
+  class n_question,n_claims,n_graph,n_look blue
+  class n_check,n_flow,n_mermaid,n_pele,n_report teal

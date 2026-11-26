@@ -8,7 +8,7 @@ Skills live in bucket folders: `skills/<bucket>/<skill-name>/SKILL.md`.
 
 | Bucket | Holds | In README + plugin? |
 |---|---|---|
-| `design/` | Design and front-end style work | Yes (promoted) |
+| `design/` | Design and front-end style work, and diagrams of how things work | Yes (promoted) |
 | `productivity/`, … | Add a new promoted bucket when a skill doesn't fit an existing one | Yes (promoted) |
 | `in-progress/` | Beta: public on purpose, feedback wanted | No |
 | `misc/` | Kept around, rarely used, not maintained | No |

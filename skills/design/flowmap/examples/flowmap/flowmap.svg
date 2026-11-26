@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="pele pele-flowchart" viewBox="0 0 532 1730" width="532" height="1730" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_tw:var(--pele-title-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="flowchart"><style>/* flowmap theme for Pele. Pele ignores Mermaid's theme and themeVariables;
+   it reads these --pele-* variables instead (https://pele.run/theming).
+   The command puts this file in a style element at the start of each SVG,
+   so the SVG follows the viewer's light or dark setting.
+
+   The look: soft colored cards for groups, one dark main path, and clear signals.
+   - A box with no source has the class `assumed`: a hollow amber dashed card.
+   - An arrow with no source is dashed (Pele sets stroke-dasharray) in the line color, so only a path
+     that may break a rule is orange.
+   - A broken rule marks the failing box with `breaks` (red) or `mayBreak` (orange, when the path uses a guess),
+     leading boxes on the path with `bugPath` (blue border), and path arrows with a red or orange linkStyle.
+   The main path is a `thick` arrow (Pele sets stroke-width="2.5"): dark ink. */
+.pele {
+  --pele-bg: #f6f6f3;
+  --pele-fg: #141414;
+  --pele-muted: #5f5f5a;
+  --pele-line: #8b8b85;
+  --pele-surface: #ffffff;
+  --pele-surface-alt: #ffffff;
+  --pele-border: #d2d2cc;
+  --pele-accent: #2f6fed;
+  --pele-radius: 12px;
+  --fm-ink: #141414;
+  --fm-guess: #b45309;
+  --fm-guess-bg: #ffffff;
+  --fm-guess-text: #92400e;
+  --fm-break: #e5484d;
+  --fm-break-bg: #ffecee;
+  --fm-break-text: #cd2834;
+  --fm-maybe: #e8730c;
+  --fm-maybe-bg: #fff3e6;
+  --fm-maybe-text: #b85a06;
+  --fm-path: #1680f3;
+}
+.pele .pele-label { font-weight: 600; }
+.pele .pele-node > :first-child { stroke-width: 1px; filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / 0.10)) drop-shadow(0 3px 8px rgb(0 0 0 / 0.06)); }
+.pele .pele-node.blue > :first-child { fill: #dce8ff; stroke: #b3cbf7; }
+.pele .pele-node.teal > :first-child { fill: #d3f0ea; stroke: #a5d9ce; }
+.pele .pele-node.green > :first-child { fill: #dcf1d3; stroke: #b4dca4; }
+.pele .pele-node.yellow > :first-child { fill: #fbedc7; stroke: #ecd38f; }
+.pele .pele-node.orange > :first-child { fill: #fde2cf; stroke: #f2c29f; }
+.pele .pele-node.pink > :first-child { fill: #fbdcec; stroke: #efb3d2; }
+.pele .pele-node.purple > :first-child { fill: #e7defd; stroke: #cbbbf4; }
+.pele .pele-node.gray > :first-child { fill: #ebebe7; stroke: #d2d2cc; }
+/* Kept after the colors so they show over them; !important overrides Pele's inline classDef styles in dark mode. */
+.pele .pele-node.assumed > :first-child { fill: var(--fm-guess-bg) !important; fill-opacity: 0.6; stroke: var(--fm-guess) !important; stroke-dasharray: 6 4 !important; stroke-width: 2px !important; filter: none; }
+.pele .pele-node.assumed .pele-label { fill: var(--fm-guess-text) !important; font-style: italic; font-weight: 500; }
+.pele .pele-node.bugPath > :first-child { stroke: var(--fm-path) !important; stroke-width: 2.5px !important; }
+.pele .pele-node.mayBreak > :first-child { fill: var(--fm-maybe-bg) !important; stroke: var(--fm-maybe) !important; stroke-width: 3px !important; filter: drop-shadow(0 0 6px rgb(232 115 12 / 0.4)); }
+.pele .pele-node.mayBreak .pele-label { fill: var(--fm-maybe-text) !important; }
+.pele .pele-node.breaks > :first-child { fill: var(--fm-break-bg) !important; stroke: var(--fm-break) !important; stroke-width: 3px !important; filter: drop-shadow(0 0 6px rgb(229 72 77 / 0.45)); }
+.pele .pele-node.breaks .pele-label { fill: var(--fm-break-text) !important; }
+/* Arrows. One with a style attribute is on a broken path (linkStyle), so it keeps its color. */
+.pele .pele-edge:not([style]) path:not(.pele-marker) { stroke-width: 1.5px; }
+.pele .pele-edge:not([style]) path[stroke-width="2.5"]:not(.pele-marker) { stroke: var(--fm-ink); stroke-width: 3px; }
+.pele .pele-edge:not([style]):has(path[stroke-width="2.5"]) .pele-marker { fill: var(--fm-ink); }
+.pele .pele-edge:not([style]) path[stroke-dasharray]:not(.pele-marker) { stroke: var(--pele-line); stroke-width: 2px; }
+.pele .pele-edge:not([style]):has(path[stroke-dasharray]) .pele-marker { fill: var(--pele-line); }
+.pele .pele-edge[style] path:not(.pele-marker) { filter: drop-shadow(0 0 4px rgb(229 72 77 / 0.5)); }
+.pele .pele-edge[style*="#e8730c"] path:not(.pele-marker) { filter: drop-shadow(0 0 4px rgb(232 115 12 / 0.45)); }
+.pele .pele-edge-label rect { fill: #ffffff; stroke: #e2e2dc; rx: 10px; }
+.pele .pele-edge-label text { fill: #45453f; font-size: 12.5px; font-weight: 500; }
+.pele .pele-cluster rect { fill: #ffffff; fill-opacity: 0.55; stroke: #d9d9d3; stroke-width: 1px; }
+.pele .pele-cluster-label { font-size: 13px; font-weight: 700; fill: #3a3a35; }
+
+@media (prefers-color-scheme: dark) {
+  .pele {
+    --pele-bg: #121212;
+    --pele-fg: #f2f2ee;
+    --pele-muted: #a3a39c;
+    --pele-line: #77776f;
+    --pele-surface: #1e1e1c;
+    --pele-surface-alt: #1a1a18;
+    --pele-border: #3a3a35;
+    --pele-accent: #6b9bff;
+    --fm-ink: #f2f2ee;
+    --fm-guess: #f0a43a;
+    --fm-guess-bg: #121212;
+    --fm-guess-text: #f6c27a;
+    --fm-break: #ff6b70;
+    --fm-break-bg: #2e2021;
+    --fm-break-text: #ff8a8e;
+    --fm-maybe: #f08c2e;
+    --fm-maybe-bg: #2e2619;
+    --fm-maybe-text: #ffb067;
+    --fm-path: #4b9aff;
+  }
+  .pele .pele-node > :first-child { filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.5)); }
+  .pele .pele-node.blue > :first-child { fill: #1f3157; stroke: #34508a; }
+  .pele .pele-node.teal > :first-child { fill: #173b36; stroke: #2a6359; }
+  .pele .pele-node.green > :first-child { fill: #1d3a1a; stroke: #33622c; }
+  .pele .pele-node.yellow > :first-child { fill: #3d3215; stroke: #6a5826; }
+  .pele .pele-node.orange > :first-child { fill: #43281a; stroke: #73472d; }
+  .pele .pele-node.pink > :first-child { fill: #3e1e30; stroke: #6c3655; }
+  .pele .pele-node.purple > :first-child { fill: #2d2350; stroke: #4c3d83; }
+  .pele .pele-node.gray > :first-child { fill: #2a2a27; stroke: #45453f; }
+  .pele .pele-edge-label rect { fill: #1e1e1c; stroke: #34342f; }
+  .pele .pele-edge-label text { fill: #d6d6cf; }
+  .pele .pele-cluster rect { fill: #1a1a18; stroke: #34342f; }
+  .pele .pele-cluster-label { fill: #d6d6cf; }
+}
+</style><text class="pele-title" font-weight="var(--_tw)" text-anchor="middle" xml:space="preserve"><tspan x="266" y="25.6">How flowmap turns a subject into a graph</tspan></text><g class="pele-clusters"><g class="pele-cluster" data-id="g_review"><rect x="143.36" y="1434.8" width="243.25" height="148" fill="var(--_a)" fill-opacity="0.5" stroke="var(--_b)" style="rx:var(--_r)"/></g><g class="pele-cluster" data-id="g_command"><rect x="8" y="666.12" width="274.32" height="695.68" fill="var(--_a)" fill-opacity="0.5" stroke="var(--_b)" style="rx:var(--_r)"/></g><g class="pele-cluster" data-id="g_agent"><rect x="194.03" y="140" width="329.94" height="409.12" fill="var(--_a)" fill-opacity="0.5" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-cluster-label" fill="var(--_m)" x="273.84" y="165.6" text-anchor="middle">The agent decides</text></g></g><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge" data-id="L_n_ask_n_question_0"><path d="M397.73,92L397.73,193"/><path class="pele-marker" d="M397.73,200L394.37,192L401.09,192Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_question_n_claims_0"><path d="M327.16,248L327.16,314"/><path class="pele-marker" d="M327.16,321L323.8,313L330.52,313Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_claims_n_graph_0"><path d="M327.16,369L327.16,435"/><path class="pele-marker" d="M327.16,442L323.8,434L330.52,434Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_check_n_graph_0"><path d="M137.16,731.12L137.16,666.12C137.16,654.12 103.74,654.12 103.74,642.12L103.74,617.12C103.74,592.32 142.15,577.12 204.81,577.12C267.47,577.12 305.88,566.48 305.88,549.12L305.88,515.62"/><path class="pele-marker" d="M305.88,508.62L309.24,516.62L302.52,516.62Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_graph_n_check_0"><path d="M321.88,509.09L321.88,549.12C321.88,573.92 304.23,589.12 275.44,589.12C246.64,589.12 229,599.76 229,617.12L229,642.12C229,654.12 153.16,654.12 153.16,666.12L153.16,724.12"/><path class="pele-marker" d="M153.16,731.12L149.8,723.12L156.52,723.12Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_check_n_flow_0"><path d="M145.16,819.8L145.16,885.8"/><path class="pele-marker" d="M145.16,892.8L141.8,884.8L148.52,884.8Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_flow_n_mermaid_0"><path d="M145.16,940.8L145.16,1006.8"/><path class="pele-marker" d="M145.16,1013.8L141.8,1005.8L148.52,1005.8Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_mermaid_n_pele_0"><path d="M145.16,1061.8L145.16,1127.8"/><path class="pele-marker" d="M145.16,1134.8L141.8,1126.8L148.52,1126.8Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_pele_n_report_0"><path d="M145.16,1182.8L145.16,1248.8"/><path class="pele-marker" d="M145.16,1255.8L141.8,1247.8L148.52,1247.8Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_report_n_look_0"><path d="M145.16,1321.8L145.16,1407.3C145.16,1421.05 256.98,1421.05 256.98,1434.8L256.98,1487.8"/><path class="pele-marker" d="M256.98,1494.8L253.62,1486.8L260.34,1486.8Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_look_n_graph_0"><path d="M272.98,1494.8L272.98,1434.8C272.98,1398.3 384.8,1398.3 384.8,1361.8L384.8,666.12C384.8,607.62 337.88,607.62 337.88,549.12L337.88,515.99"/><path class="pele-marker" d="M337.88,508.99L341.24,516.99L334.52,516.99Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_look_n_reader_0"><path d="M264.98,1542.8L264.98,1628.3C264.98,1635.99 324.35,1635.99 324.35,1643.67L324.35,1648.8" stroke-width="2.5"/><path class="pele-marker" d="M324.35,1655.8L320.99,1647.8L327.71,1647.8Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_n_reader_n_question_0"><path d="M408.32,1655.8L408.32,1642.8C408.32,1612.8 468.3,1612.8 468.3,1582.8L468.3,255" stroke-dasharray="3 4"/><path class="pele-marker" d="M468.3,248L471.66,256L464.94,256Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-cluster-titles"><g class="pele-cluster-title" data-id="g_review"><text fill="none" stroke="color-mix(in srgb,var(--_a) 50%,var(--_bg))" stroke-width="5" stroke-linejoin="round" x="264.98" y="1460.4" text-anchor="middle">The agent looks and hands off</text><text class="pele-cluster-label" fill="var(--_m)" x="264.98" y="1460.4" text-anchor="middle">The agent looks and hands off</text></g><g class="pele-cluster-title" data-id="g_command"><text fill="none" stroke="color-mix(in srgb,var(--_a) 50%,var(--_bg))" stroke-width="5" stroke-linejoin="round" x="145.16" y="691.72" text-anchor="middle">The command checks and renders</text><text class="pele-cluster-label" fill="var(--_m)" x="145.16" y="691.72" text-anchor="middle">The command checks and renders</text></g></g><g class="pele-edge-labels" font-size="14"><g class="pele-edge-label" data-id="L_n_question_n_claims_0"><rect x="253.53" y="270.5" width="147.27" height="21" rx="3" fill="var(--_bg)"/><text x="327.16" y="285.9" text-anchor="middle">reads the real material</text></g><g class="pele-edge-label" data-id="L_n_claims_n_graph_0"><rect x="304.89" y="391.5" width="44.55" height="21" rx="3" fill="var(--_bg)"/><text x="327.16" y="406.9" text-anchor="middle">writes</text></g><g class="pele-edge-label" data-id="L_n_check_n_graph_0"><rect x="60.45" y="619.12" width="86.58" height="21" rx="3" fill="var(--_bg)"/><text x="103.74" y="634.52" text-anchor="middle">yes: fix them</text></g><g class="pele-edge-label" data-id="L_n_graph_n_check_0"><rect x="167.03" y="619.12" width="123.93" height="21" rx="3" fill="var(--_bg)"/><text x="229" y="634.52" text-anchor="middle">runs the command</text></g><g class="pele-edge-label" data-id="L_n_check_n_flow_0"><rect x="133.38" y="842.3" width="23.57" height="21" rx="3" fill="var(--_bg)"/><text x="145.16" y="857.7" text-anchor="middle">no</text></g><g class="pele-edge-label" data-id="L_n_flow_n_mermaid_0"><rect x="67.63" y="963.3" width="155.06" height="21" rx="3" fill="var(--_bg)"/><text x="145.16" y="978.7" text-anchor="middle">marks broken paths red</text></g><g class="pele-edge-label" data-id="L_n_mermaid_n_pele_0"><rect x="117.43" y="1084.3" width="55.46" height="21" rx="3" fill="var(--_bg)"/><text x="145.16" y="1099.7" text-anchor="middle">renders</text></g><g class="pele-edge-label" data-id="L_n_pele_n_report_0"><rect x="63.35" y="1205.3" width="163.62" height="21" rx="3" fill="var(--_bg)"/><text x="145.16" y="1220.7" text-anchor="middle">counts boxes and arrows</text></g><g class="pele-edge-label" data-id="L_n_report_n_look_0"><rect x="94.48" y="1384.3" width="101.37" height="21" rx="3" fill="var(--_bg)"/><text x="145.16" y="1399.7" text-anchor="middle">renders a PNG</text></g><g class="pele-edge-label" data-id="L_n_look_n_graph_0"><rect x="312.32" y="1003.46" width="144.96" height="21" rx="3" fill="var(--_bg)"/><text x="384.8" y="1018.86" text-anchor="middle">reads badly: change it</text></g><g class="pele-edge-label" data-id="L_n_look_n_reader_0"><rect x="232.18" y="1605.3" width="65.6" height="21" rx="3" fill="var(--_bg)"/><text x="264.98" y="1620.7" text-anchor="middle">hands off</text></g><g class="pele-edge-label" data-id="L_n_reader_n_question_0"><rect x="417.22" y="1498.3" width="102.16" height="21" rx="3" fill="var(--_bg)"/><text x="468.3" y="1513.7" text-anchor="middle">a new question</text></g></g><g class="pele-nodes"><g class="pele-node pele-shape-stadium" data-id="n_ask" transform="translate(397.73,68)"><rect x="-95.82" y="-24" width="191.63" height="48" rx="24" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">You ask for a graph</text></g><g class="pele-node pele-shape-rect blue" data-id="n_question" transform="translate(397.73,224)"><rect x="-106.24" y="-24" width="212.48" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Pin the reader's question</text></g><g class="pele-node pele-shape-rect blue" data-id="n_claims" transform="translate(327.16,345)"><rect x="-113.14" y="-24" width="226.27" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Collect claims and sources</text></g><g class="pele-node pele-shape-cyl blue" data-id="n_graph" transform="translate(327.16,475.56)"><path d="M-66.91,-24A66.91,9.56 0 0 1 66.91,-24V24A66.91,9.56 0 0 1 -66.91,24Z" fill="var(--_s)" stroke="var(--_b)"/><path d="M-66.91,-24A66.91,9.56 0 0 0 66.91,-24" fill="none" stroke="var(--_b)"/><text class="pele-label" x="0" y="10.38" text-anchor="middle">The graph file</text></g><g class="pele-node pele-shape-diam teal" data-id="n_check" transform="translate(145.16,772.96)"><polygon points="0,-46.84 74.94,0 0,46.84 -74.94,0" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Any errors?</text></g><g class="pele-node pele-shape-rect teal" data-id="n_flow" transform="translate(145.16,916.8)"><rect x="-105.59" y="-24" width="211.18" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Check the flow and rules</text></g><g class="pele-node pele-shape-rect teal" data-id="n_mermaid" transform="translate(145.16,1037.8)"><rect x="-64.23" y="-24" width="128.46" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Mermaid text</text></g><g class="pele-node pele-shape-rect teal" data-id="n_pele" transform="translate(145.16,1158.8)"><rect x="-90.03" y="-24" width="180.06" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Pele draws the SVG</text></g><g class="pele-node pele-shape-rect teal" data-id="n_report" transform="translate(145.16,1288.8)"><rect x="-114.47" y="-33" width="228.94" height="66" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-4.9">Report: warnings, claims to</tspan><tspan x="0" y="16.1">confirm</tspan></text></g><g class="pele-node pele-shape-rect blue" data-id="n_look" transform="translate(264.98,1518.8)"><rect x="-81.59" y="-24" width="163.18" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Look at the image</text></g><g class="pele-node pele-shape-stadium" data-id="n_reader" transform="translate(366.33,1688.8)"><rect x="-114.99" y="-33" width="229.98" height="66" rx="33" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-4.9">You confirm the dashed</tspan><tspan x="0" y="16.1">claims</tspan></text></g></g></svg>

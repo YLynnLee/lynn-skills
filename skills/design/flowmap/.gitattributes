@@ -1,0 +1,5 @@
+# Keep LF everywhere, so the committed examples match what the command writes on Windows too.
+* text=auto eol=lf
+*.png binary
+# vendor/pele/ must stay byte for byte what npm publishes (npm run vendor:check).
+vendor/** -text
