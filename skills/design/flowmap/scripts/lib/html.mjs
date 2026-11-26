@@ -161,10 +161,16 @@ ${flows.map(flowView).join('\n')}
     ? `<button type="button" class="float-btn" id="rail-open" aria-controls="rail" aria-expanded="true" title="Show flows ([)">${ICON_FLOW}<span class="ro-label" id="ro-label">All flows</span><span class="ro-step" id="ro-step" hidden></span></button>`
     : `<div class="canvas-title" aria-hidden="true"><span class="ct-name">${esc(title)}</span><span class="ct-meta">${esc(counts)}</span></div>`;
 
-  const brokenN = rules.filter((r) => !r.ok && !r.vacuous).length;
+  // A rule that may break (its path uses a guess) is orange, like its row, and is not counted as broken.
+  const brokenN = rules.filter((r) => !r.ok && !r.vacuous && !r.uncertain).length;
+  const maybeN = rules.filter((r) => !r.ok && r.uncertain).length;
   const unknownN = rules.filter((r) => r.vacuous).length;
   const pill = (tone, label) => `<span class="pill ${tone}">${label}</span>`;
-  const rulesStatus = brokenN ? pill('bad', `${brokenN} broken`) : unknownN ? pill('warn', `${unknownN} unchecked`) : pill('ok', rules.length === 1 ? 'Holds' : 'All hold');
+  const rulesStatus = [
+    brokenN && pill('bad', `${brokenN} broken`),
+    maybeN && pill('warn', `${maybeN} may break`),
+    !brokenN && !maybeN && unknownN && pill('warn', `${unknownN} unchecked`),
+  ].filter(Boolean).join('') || pill('ok', rules.length === 1 ? 'Holds' : 'All hold');
   const rulesHtml = rules.length
     ? section('sec-rules', 'Rules', rules.length, `<ul class="rules">${rules.map((r, i) => `<li class="${r.ok ? 'ok' : r.vacuous ? 'unknown' : r.uncertain ? 'broken maybe' : 'broken'}"><span class="mark" aria-hidden="true">${r.ok ? '✓' : r.vacuous ? '?' : '✗'}</span><div>${
       r.ids.length ? `<button type="button" data-select="rule:${i}">${esc(r.says)}</button>` : `<strong>${esc(r.says)}</strong>`
@@ -201,8 +207,9 @@ ${flows.map(flowView).join('\n')}
   ].filter(Boolean).map(([k, desc]) => `<span class="kb"><kbd>${k}</kbd>${desc}</span>`).join('')}</div>`;
   const howHtml = section('sec-how', 'How to read', null, `${legend}${shortcutsHtml}<p class="hint">Drag the board or scroll to pan. Pinch or ⌘/Ctrl + scroll to zoom at the pointer. Double-click empty space to fit.</p><p class="hint">Rendered with Pele ${esc(peleVersion())}.</p>`, false);
 
+  // The Details badge counts broken rules (red), else rules that may break, else claims to confirm (orange).
   const broken = brokenN;
-  const badgeCount = broken || unsourced.length;
+  const badgeCount = broken || maybeN || unsourced.length;
   const badge = graph && badgeCount ? `<span class="badge${broken ? ' bad' : ''}">${badgeCount}</span>` : '';
 
   return `<!doctype html>

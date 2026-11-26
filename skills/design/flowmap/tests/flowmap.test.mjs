@@ -342,6 +342,11 @@ describe('command', () => {
     assert.match(guessMmd, /class n_three mayBreak/);
     assert.match(guessMmd, /class n_one,n_two bugPath/);
     assert.match(guessMmd, /linkStyle 0,1 stroke:#e8730c/);
+    // A rule that may break is orange in the page too: its header pill and the Details badge do not say "broken".
+    const guessPage = readFileSync(join(out, 'rule.html'), 'utf8');
+    assert.match(guessPage, /<span class="pill warn">1 may break<\/span>/);
+    assert.doesNotMatch(guessPage, /<span class="pill bad">/);
+    assert.match(guessPage, /<span class="badge">1<\/span>/);
 
     const confirmed = small();
     confirmed.nodes[2].source = 'user said';
@@ -356,6 +361,9 @@ describe('command', () => {
     assert.match(confirmedMmd, /class n_three breaks/);
     assert.match(confirmedMmd, /class n_one,n_two bugPath/);
     assert.match(confirmedMmd, /linkStyle 0,1 stroke:#e5484d/);
+    const confirmedPage = readFileSync(join(out2, 'confirmed.html'), 'utf8');
+    assert.match(confirmedPage, /<span class="pill bad">1 broken<\/span>/);
+    assert.match(confirmedPage, /<span class="badge bad">1<\/span>/);
   });
 
   test('invalid JSON exits 1', () => {
@@ -365,7 +373,11 @@ describe('command', () => {
   test('a .mmd file is rendered, and a Pele error names the line', () => {
     const good = run(write('seq.mmd', 'sequenceDiagram\n  You->>Shop: pay\n'), '--out', join(scratch, 'seq'));
     assert.equal(good.status, 0, good.stderr);
-    assert.match(good.stdout, /sequence/);
+    assert.match(good.stdout, /sequence, \d+ boxes, 1 arrow\./);
+    // Pele gives arrows in other diagram types a second class, such as `pele-edge pele-transition`.
+    const state = run(write('state.mmd', 'stateDiagram-v2\n  [*] --> Thin\n  Thin --> Grounded: done\n  Grounded --> [*]\n'), '--out', join(scratch, 'state'));
+    assert.equal(state.status, 0, state.stderr);
+    assert.match(state.stdout, /state, \d+ boxes, 3 arrows\./);
     assert.match(good.stdout, /sources were not checked/);
     const bad = run(write('bad.mmd', 'flowchart LR\n  a --> \n  b[oops'));
     assert.equal(bad.status, 1);

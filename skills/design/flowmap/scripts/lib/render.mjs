@@ -36,7 +36,8 @@ export function renderMermaid(text, { css } = {}) {
     width: r.width,
     height: r.height,
     nodes: (r.svg.match(/class="pele-node[ "]/g) ?? []).length,
-    edges: (r.svg.match(/class="pele-edge"/g) ?? []).length,
+    // Arrows in diagrams other than flowcharts carry a second class, such as `pele-edge pele-message`.
+    edges: (r.svg.match(/class="pele-edge[ "]/g) ?? []).length,
   };
 }
 
