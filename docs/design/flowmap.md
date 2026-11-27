@@ -4,9 +4,9 @@ Maps how something works, connects or flows: a codebase, a system, a process, a 
 
 Skill: [`skills/design/flowmap/SKILL.md`](../../skills/design/flowmap/SKILL.md) · Model-invoked · MIT
 
-![A checkout flow where a timed-out card still gets a receipt, drawn as a red path](../../skills/design/flowmap/examples/checkout/checkout.svg)
+![A checkout flow where a timed-out card still gets a receipt, drawn as a red path](flowmap/checkout.svg)
 
-*[`examples/checkout/`](../../skills/design/flowmap/examples/checkout/): a made-up shop with a bug. The rule "No receipt goes out unless the card is accepted" breaks: when the card network times out, the retry queue saves the order as pending and the receipt goes out anyway. Every step on the red path is cited to a line of [the shop's code](../../skills/design/flowmap/examples/checkout/shop/). The one dashed arrow, "charges again later", is only a comment in that code, so it is drawn as a guess for you to confirm.*
+*[`tests/fixtures/checkout/`](../../skills/design/flowmap/tests/fixtures/checkout/): a made-up shop with a bug. The rule "No receipt goes out unless the card is accepted" breaks: when the card network times out, the retry queue saves the order as pending and the receipt goes out anyway. Every step on the red path is cited to a line of [the shop's code](../../skills/design/flowmap/tests/fixtures/checkout/shop/). The one dashed arrow, "charges again later", is only a comment in that code, so it is drawn as a guess for you to confirm.*
 
 ## What it does
 
@@ -22,7 +22,7 @@ The agent does the judgment and a script does the mechanics.
 
 It writes one file, an HTML page. The diagram sits on a canvas you can zoom and pan, and a side panel shows the source of whatever you click, the rules, the claims to confirm, what the map leaves out, and a legend. A Flows list lets you pick one journey through the graph and step through it. The renderer, [Pele](https://pele.run), is inlined, so the page works offline (about 850 KB). On request it also keeps the SVG, a plain Mermaid file that shows on GitHub and in Obsidian, and the report.
 
-[`examples/flowmap/`](../../skills/design/flowmap/examples/flowmap/) is the skill drawn by itself, cited to its own files.
+[`tests/fixtures/flowmap/`](../../skills/design/flowmap/tests/fixtures/flowmap/) is the skill drawn by itself, cited to its own files.
 
 ## When to reach for it
 
@@ -60,7 +60,7 @@ node scripts/doctor.mjs
 To run the command yourself:
 
 ```bash
-node scripts/flowmap.mjs examples/checkout/checkout.json --png
+node scripts/flowmap.mjs tests/fixtures/checkout/checkout.json --png
 ```
 
 It writes `checkout.html` next to the input and prints the report. `--out DIR` writes the page somewhere else, `--all` also keeps the `.mmd`, `.svg`, `.report.md` and PNG, and `--help` lists every option. The graph format is in [`references/graph-format.md`](../../skills/design/flowmap/references/graph-format.md).
@@ -93,9 +93,9 @@ From the skill folder:
 npm test
 ```
 
-There is nothing to install first. They render through the real Pele. They check the source, flow and rule checks against small graphs, the page and report, and that each example still checks clean and produces its committed `.mmd`; the checkout example must find its planted bug. After you change the generator, run `npm run examples` to refresh the examples. CI runs them on Linux, macOS and Windows with Node 20, 22 and 24 whenever the skill changes (`.github/workflows/flowmap.yml`).
+There is nothing to install first. They render through the real Pele. They check the source, flow and rule checks against small graphs, the page and report, and that each graph in `tests/fixtures/` still checks clean and produces its committed `.mmd`; the checkout graph must find its planted bug. After you change the generator, check the new Mermaid and run `FLOWMAP_UPDATE=1 npm test` to rewrite it. The picture at the top of this page is `flowmap/checkout.svg`; to refresh it, run `node scripts/flowmap.mjs tests/fixtures/checkout/checkout.json --all --out <tmp dir>` and copy the SVG here. CI runs them on Linux, macOS and Windows with Node 20, 22 and 24 whenever the skill changes (`.github/workflows/flowmap.yml`).
 
-Pele is copied from npm into `vendor/pele/`, so users need no `npm install`. To move to a new Pele version, run `npm run vendor -- 1.14.0`, then the tests and `npm run examples`. `npm run vendor:check` (also in CI) confirms the copy is byte for byte what npm publishes for that version.
+Pele is copied from npm into `vendor/pele/`, so users need no `npm install`. To move to a new Pele version, run `npm run vendor -- 1.14.0`, then the tests. `npm run vendor:check` (also in CI) confirms the copy is byte for byte what npm publishes for that version.
 
 ## Credits
 
