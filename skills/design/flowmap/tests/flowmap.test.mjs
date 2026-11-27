@@ -865,20 +865,22 @@ describe('report and page', () => {
   });
 });
 
-describe('examples', () => {
-  const dir = join(root, 'examples');
+// Whole graphs the skill must keep drawing the same way. FLOWMAP_UPDATE=1 npm test rewrites their .mmd.
+describe('fixtures', () => {
+  const dir = join(root, 'tests', 'fixtures');
   for (const name of readdirSync(dir)) {
     test(`${name} is a clean graph that matches its committed Mermaid`, () => {
       const graph = JSON.parse(readFileSync(join(dir, name, `${name}.json`), 'utf8'));
       assert.deepEqual(validate(graph), { errors: [], warnings: [] });
-      // A broken rule is the finding an example may show on purpose; anything else is a mistake.
+      // A broken rule is the finding a fixture may show on purpose; anything else is a mistake.
       assert.deepEqual(checkFlow(graph).warnings.filter((w) => !w.startsWith('Rule broken:')), []);
-      assert.ok(checkFlow(graph).rules.length, 'each example shows a rule');
-      // Every example cites files inside the skill folder, so its sources are always checked.
+      assert.ok(checkFlow(graph).rules.length, 'each fixture shows a rule');
+      // Every fixture cites files inside the skill folder, so its sources are always checked.
       const r = checkSources(graph, resolve(dir, name, graph.root ?? '.'));
       assert.deepEqual([...r.errors, ...r.warnings], []);
       const { mermaid } = toMermaid(graph, { breaks: checkFlow(graph).breaks });
-      assert.equal(mermaid, readFileSync(join(dir, name, `${name}.mmd`), 'utf8'), 'run `npm run examples` to refresh');
+      if (process.env.FLOWMAP_UPDATE) writeFileSync(join(dir, name, `${name}.mmd`), mermaid);
+      assert.equal(mermaid, readFileSync(join(dir, name, `${name}.mmd`), 'utf8'), 'run `FLOWMAP_UPDATE=1 npm test` to refresh');
       renderMermaid(mermaid);
     });
   }
