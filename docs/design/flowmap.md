@@ -31,7 +31,7 @@ It writes one file, an HTML page. The diagram sits on a canvas you can zoom and 
 - You want to know whether a flow keeps a promise, such as "a failed payment never sends a receipt" or "nothing reaches production without review".
 - Onboarding: a map of a system for someone new, with its limits written down.
 
-Not for charts of numbers (use a charting tool) or for designing UI.
+Not for charts of numbers (use a charting tool) or for designing UI. For a quick sketch nobody will check, such as an idea to talk through, the agent writes a Mermaid block in its reply instead and offers a traced flowmap if you want one.
 
 ## Setup
 
