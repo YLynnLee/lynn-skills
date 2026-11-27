@@ -1,5 +1,15 @@
 # lynn-skills
 
+## 0.3.0
+
+### Minor Changes
+
+- 37037be: flowmap: no longer takes over a quick sketch nobody will check. The description says so, and the skill tells the agent to answer with a Mermaid block in the reply instead, offering a traced flowmap if the user wants one.
+
+### Patch Changes
+
+- ae26c3e: flowmap: the skill folder now holds only what the skill runs on. The example runs moved into `tests/fixtures/` (graph and Mermaid only), the checkout picture moved to the docs page, and the PNGs, reports and HTML outputs are gone. `FLOWMAP_UPDATE=1 npm test` replaces `npm run examples`.
+
 ## 0.2.0
 
 ### Minor Changes
