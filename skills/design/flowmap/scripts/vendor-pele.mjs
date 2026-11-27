@@ -59,7 +59,7 @@ try {
     mkdirSync(vendor, { recursive: true });
     for (const [from, to] of Object.entries(FILES)) writeFileSync(join(vendor, to), readFileSync(join(tmp, from)));
     writeFileSync(join(vendor, 'VERSION'), `${version}\n`);
-    console.log(`Copied pele@${version} (${packed.integrity}) into vendor/pele/. Run the tests, then \`npm run examples\`.`);
+    console.log(`Copied pele@${version} (${packed.integrity}) into vendor/pele/. Run the tests; if a fixture's Mermaid changed, check it and run \`FLOWMAP_UPDATE=1 npm test\`.`);
   }
 } finally {
   rmSync(tmp, { recursive: true, force: true });
