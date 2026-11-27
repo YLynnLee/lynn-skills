@@ -1,6 +1,6 @@
 ---
 name: flowmap
-description: "Map how a codebase, system, process, decision or document flows or connects, as a diagram where every box and arrow is traced to its source (a file and line, a URL, a doc section or the user's word) and guesses are drawn dashed for the reader to confirm. It checks promises such as \"nothing ships without review\" against every path and draws a path that breaks one in red. The output is an HTML page that shows the source of whatever the reader clicks, and Mermaid on request. Use for /flowmap, or when the user asks to map, graph, diagram, draw or visualize how something works, connects or flows: an architecture, a request or data flow, a pipeline, a user journey, a decision, or how services, modules or skills hand off to each other; or wants a flow checked for gaps or bugs. Not for charts of numbers or for designing UI."
+description: "Map how a codebase, system, process, decision or document flows or connects, as a diagram where every box and arrow is traced to its source (a file and line, a URL, a doc section or the user's word) and guesses are drawn dashed for the reader to confirm. It checks promises such as \"nothing ships without review\" against every path and draws a path that breaks one in red. The output is an HTML page that shows the source of whatever the reader clicks, and Mermaid on request. Use for /flowmap, or when the user asks to map, graph, diagram, draw or visualize how something works, connects or flows: an architecture, a request or data flow, a pipeline, a user journey, a decision, or how services, modules or skills hand off to each other; or wants a flow checked for gaps or bugs. Not for charts of numbers, for designing UI, or for a quick sketch nobody will check, where a Mermaid block in the reply is enough."
 license: MIT
 compatibility: "Needs an agent that can run shell commands, and Node 20 or later. The Pele renderer ships in vendor/pele/, so nothing else is installed. Chrome, Chromium, Edge or Playwright are optional, for PNG previews of the layout."
 ---
@@ -8,6 +8,8 @@ compatibility: "Needs an agent that can run shell commands, and Node 20 or later
 # Flowmap
 
 A flowmap answers one question for one reader. Each box and each arrow is a claim. A claim with a source is drawn solid. A claim with no source is drawn dashed, and the hand-off asks the reader to confirm it. The reader decides whether the graph is right, so it uses their words.
+
+Use it when the reader will rely on the graph or check it. For a quick sketch, such as an idea to talk through or a picture the user will look at once, write a Mermaid flowchart in the reply instead, and offer a traced flowmap if they want one.
 
 ## Run
 
