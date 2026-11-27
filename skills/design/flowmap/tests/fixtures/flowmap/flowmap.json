@@ -17,30 +17,30 @@
   },
   "nodes": [
     {"id": "ask", "label": "You ask for a graph", "shape": "stadium", "source": "SKILL.md:3"},
-    {"id": "question", "label": "Pin the reader's question", "group": "agent", "source": "SKILL.md:31"},
-    {"id": "claims", "label": "Collect claims and sources", "group": "agent", "source": "SKILL.md:33"},
-    {"id": "graph", "label": "The graph file", "shape": "database", "group": "agent", "source": ["SKILL.md:37", "references/graph-format.md:3"]},
+    {"id": "question", "label": "Pin the reader's question", "group": "agent", "source": "SKILL.md:33"},
+    {"id": "claims", "label": "Collect claims and sources", "group": "agent", "source": "SKILL.md:35"},
+    {"id": "graph", "label": "The graph file", "shape": "database", "group": "agent", "source": ["SKILL.md:39", "references/graph-format.md:3"]},
     {"id": "check", "label": "Any errors?", "shape": "decision", "group": "command", "source": ["scripts/flowmap.mjs:99", "scripts/lib/graph.mjs, validate()", "scripts/lib/sources.mjs, checkSources()"]},
     {"id": "flow", "label": "Check the flow and rules", "group": "command", "source": "scripts/flowmap.mjs:103"},
     {"id": "mermaid", "label": "Mermaid text", "group": "command", "source": "scripts/flowmap.mjs:105"},
     {"id": "pele", "label": "Pele draws the SVG", "group": "command", "source": "scripts/lib/render.mjs:1"},
     {"id": "report", "label": "Report: warnings, claims to confirm", "group": "command", "source": "scripts/flowmap.mjs, buildReport()"},
-    {"id": "look", "label": "Look at the image", "group": "review", "source": "SKILL.md:56"},
-    {"id": "reader", "label": "You confirm the dashed claims", "shape": "stadium", "source": "SKILL.md:63"}
+    {"id": "look", "label": "Look at the image", "group": "review", "source": "SKILL.md:58"},
+    {"id": "reader", "label": "You confirm the dashed claims", "shape": "stadium", "source": "SKILL.md:65"}
   ],
   "edges": [
-    {"from": "ask", "to": "question", "source": "SKILL.md:31"},
-    {"from": "question", "to": "claims", "label": "reads the real material", "source": "SKILL.md:33"},
-    {"from": "claims", "to": "graph", "label": "writes", "source": "SKILL.md:37"},
-    {"from": "check", "to": "graph", "label": "yes: fix them", "source": "SKILL.md:48"},
-    {"from": "graph", "to": "check", "label": "runs the command", "source": "SKILL.md:48"},
+    {"from": "ask", "to": "question", "source": "SKILL.md:33"},
+    {"from": "question", "to": "claims", "label": "reads the real material", "source": "SKILL.md:35"},
+    {"from": "claims", "to": "graph", "label": "writes", "source": "SKILL.md:39"},
+    {"from": "check", "to": "graph", "label": "yes: fix them", "source": "SKILL.md:50"},
+    {"from": "graph", "to": "check", "label": "runs the command", "source": "SKILL.md:50"},
     {"from": "check", "to": "flow", "label": "no", "source": "scripts/flowmap.mjs:103"},
     {"from": "flow", "to": "mermaid", "label": "marks broken paths red", "source": "scripts/lib/graph.mjs:287-288"},
     {"from": "mermaid", "to": "pele", "label": "renders", "source": "scripts/flowmap.mjs:113"},
     {"from": "pele", "to": "report", "label": "counts boxes and arrows", "source": "scripts/flowmap.mjs:160"},
-    {"from": "report", "to": "look", "label": "renders a PNG", "source": "SKILL.md:56"},
-    {"from": "look", "to": "graph", "label": "reads badly: change it", "source": "SKILL.md:56"},
-    {"from": "look", "to": "reader", "label": "hands off", "style": "thick", "source": "SKILL.md:60"},
+    {"from": "report", "to": "look", "label": "renders a PNG", "source": "SKILL.md:58"},
+    {"from": "look", "to": "graph", "label": "reads badly: change it", "source": "SKILL.md:58"},
+    {"from": "look", "to": "reader", "label": "hands off", "style": "thick", "source": "SKILL.md:62"},
     {"from": "reader", "to": "question", "label": "a new question"}
   ]
 }
