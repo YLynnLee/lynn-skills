@@ -1,6 +1,6 @@
 {
   "name": "lynn-skills",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Agent skills by YLynnLee, for Claude Code, Codex, Copilot, Gemini CLI, Cursor and more.",
   "license": "MIT",
