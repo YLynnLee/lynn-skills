@@ -21,6 +21,8 @@ export const DEFAULT_MAX_EDGES = 20;
 const MAX_NODE_LABEL = 40;
 const MAX_EDGE_LABEL = 32;
 const MAX_COLORS = 6;
+// Above this many arrows, a graph with two or more decisions should name its journeys in `flows`.
+const FLOWS_MIN_EDGES = 12;
 
 const isText = (v) => typeof v === 'string' && v.trim() !== '';
 
@@ -197,7 +199,11 @@ export function validate(graph, { maxEdges = DEFAULT_MAX_EDGES } = {}) {
     warnings.push('The graph does not say what it leaves out. Add `leavesOut`, so a reader who finds it later knows its limits.');
   }
   if (edges.length > maxEdges) {
-    warnings.push(`${edges.length} arrows is more than ${maxEdges}, so the graph is hard to read. Merge boxes that act the same, drop detail the reader does not need, or split it into an overview and a close-up.`);
+    warnings.push(`${edges.length} arrows is more than ${maxEdges}, so the graph is hard to read. Merge boxes that act the same, drop detail the reader does not need, split it into an overview and a close-up, or name its journeys in \`flows\` so the reader can trace one at a time.`);
+  }
+  const decisions = nodes.filter((n) => n.shape === 'decision').length;
+  if (!flows?.length && edges.length > FLOWS_MIN_EDGES && decisions >= 2) {
+    warnings.push(`${edges.length} arrows and ${decisions} decisions make several journeys, and the graph names none. Add \`flows\`, such as the main path and each branch a reader takes, so the page lists them and the reader can trace one at a time.`);
   }
   const touched = new Set(edges.flatMap((e) => [e.from, e.to]));
   if (edges.length) {

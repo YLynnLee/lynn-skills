@@ -35,7 +35,7 @@
     {"from": "check", "to": "graph", "label": "yes: fix them", "source": "SKILL.md:50"},
     {"from": "graph", "to": "check", "label": "runs the command", "source": "SKILL.md:50"},
     {"from": "check", "to": "flow", "label": "no", "source": "scripts/flowmap.mjs:103"},
-    {"from": "flow", "to": "mermaid", "label": "marks broken paths red", "source": "scripts/lib/graph.mjs:287-288"},
+    {"from": "flow", "to": "mermaid", "label": "marks broken paths red", "source": "scripts/lib/graph.mjs:293-294"},
     {"from": "mermaid", "to": "pele", "label": "renders", "source": "scripts/flowmap.mjs:113"},
     {"from": "pele", "to": "report", "label": "counts boxes and arrows", "source": "scripts/flowmap.mjs:160"},
     {"from": "report", "to": "look", "label": "renders a PNG", "source": "SKILL.md:58"},

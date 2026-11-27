@@ -433,6 +433,26 @@ describe('new fields', () => {
     assert.ok(validate(g).warnings.some((w) => w.includes('`leavesOut`')));
   });
 
+  test('a busy graph with branches and no flows gets a warning', () => {
+    // 13 arrows in a chain, with two decisions: several journeys, none named.
+    const busy = (decisions) => {
+      const g = small();
+      g.nodes = Array.from({ length: 14 }, (_, i) => ({ id: `n${i}`, label: `Box ${i}`, ...(i < decisions ? { shape: 'decision' } : {}) }));
+      g.edges = g.nodes.slice(1).map((n, i) => ({ from: `n${i}`, to: n.id, label: 'next' }));
+      delete g.groups;
+      return g;
+    };
+    const flowsWarning = (g) => validate(g).warnings.some((w) => w.includes('Add `flows`'));
+    assert.ok(flowsWarning(busy(2)));
+    assert.ok(!flowsWarning(busy(1)), 'one decision is a single fork, not several journeys');
+    const named = busy(2);
+    named.flows = [{ label: 'Main path', steps: ['n0', 'n1', 'n2'] }];
+    assert.ok(!flowsWarning(named), 'a graph that names its flows is not warned');
+    const small12 = busy(2);
+    small12.edges.pop();
+    assert.ok(!flowsWarning(small12), '12 arrows is not busy yet');
+  });
+
   test('flows are validated, resolved into highlight ids + Solo Mermaid, and rendered in the HTML page', () => {
     const bad = small();
     bad.flows = [
