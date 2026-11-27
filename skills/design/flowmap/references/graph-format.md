@@ -43,7 +43,7 @@ In this graph, the box "Receipt email" and the arrow "sends the receipt" have no
 | `root` | no | The folder that file sources start from, absolute or relative to the graph file. `--root` overrides it. The default is the folder the command runs in. |
 | `leavesOut` | no, but warned | What a reader might expect that the graph does not show, as text or a list. It goes in the report and the page. |
 | `rules` | no | Promises about the flow, checked against every path. See [Rule](#rule). |
-| `flows` | no | Named journeys through the graph, listed in the HTML page's Flows rail, with Highlight / Solo and step-through. See [Flow](#flow). |
+| `flows` | no, but warned | Named journeys through the graph, listed in the HTML page's Flows rail, with Highlight / Solo and step-through. See [Flow](#flow). |
 | `groups` | no | An object of groups, keyed by group id. |
 | `nodes` | yes | A non-empty list of boxes. Pele lays them out in this order. A group is drawn whole, where its first box is listed. |
 | `edges` | no | A list of arrows. |
@@ -101,6 +101,8 @@ Named journeys that the reader can toggle in the HTML viewer (either **Highlight
 | `steps` | Ordered list of at least 2 node ids (`["cart", "check", "orders", "email"]`). Every consecutive pair must have an arrow in `edges`. |
 | `nodes` | List of at least 2 node ids for a branching sub-flow; highlights all arrows between those boxes. |
 
+Write one flow for the main path and one for each branch a reader would ask about. A graph with more than 12 arrows and two or more decisions, and no `flows`, gets a warning, since its page has no Flows rail.
+
 ## Sources
 
 A source that names a file is checked against the files under `root`. These forms name a file:
@@ -138,6 +140,7 @@ URLs and notes such as `user said` cannot be checked. The report lists them, so 
 - A cited line, or a range of up to 40 lines, that shares no word with its claim. Words match whole, so "art" does not meet "start". `camelCase` and `snake_case` are split, plurals and `-ed`/`-ing` forms match, and stop words are ignored. The path does not count, except that a `SKILL.md` counts its skill's folder name.
 - A claim whose file sources have no line, `#heading` or `name()`.
 - A `#heading` the Markdown file does not have, or a `name()` the file does not mention.
+- A graph with more than 12 arrows and two or more decisions, and no `flows`.
 - A cited `SKILL.md` that mentions `/sibling-skill` (a folder next to it with a `SKILL.md`) that is in neither a box label nor `leavesOut`.
 - Boxes that nothing reaches from where the flow starts.
 - A `decision` with one way out, or none.
